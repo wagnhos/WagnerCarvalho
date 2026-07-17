@@ -306,16 +306,54 @@ footer{ border-top:1px solid var(--border-soft); padding: 32px 0; }
 }
 .modal-overlay.open{ opacity:1; pointer-events:auto; }
 .modal{
+  position:relative;
   background: var(--bg-elevated); border:1px solid var(--border); border-radius: var(--radius-lg);
-  max-width: 620px; width:100%; max-height:85vh; overflow-y:auto; padding: 40px;
+  max-width: 620px; width:100%; max-height:85vh; overflow:visible;
   transform: translateY(16px) scale(0.98); transition: transform 0.35s var(--ease);
 }
 .modal-overlay.open .modal{ transform: translateY(0) scale(1); }
-.modal-close{ position:absolute; top:24px; right:24px; width:34px; height:34px; border-radius:9px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; }
+.modal-scroll{ max-height:85vh; overflow-y:auto; padding:40px; border-radius: var(--radius-lg); }
+.modal-close{ position:absolute; top:24px; right:24px; width:34px; height:34px; border-radius:9px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; background: var(--bg-elevated); z-index:6; }
 .modal-close:hover{ border-color: var(--border-hover); }
 .modal h3{ font-size:24px; margin-bottom:24px; padding-right:40px; }
 .modal .pc-block{ margin-bottom:20px; }
 .modal .pc-tags, .modal .pc-result{ margin-bottom:4px; }
+.modal-panel{ display:none; }
+.modal-panel.active{ display:block; }
+
+.modal-nav{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:46px; height:46px; border-radius:50%;
+  background: var(--bg-elevated); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  color: var(--text); cursor:pointer; z-index:10;
+  transition: all 0.2s var(--ease);
+  box-shadow: 0 12px 28px -10px rgba(0,0,0,0.6);
+}
+.modal-nav:hover{ border-color: var(--accent); color: var(--accent); transform: translateY(-50%) scale(1.08); }
+.modal-nav svg{ width:18px; height:18px; }
+.modal-nav.right{ right:-64px; }
+.modal-nav.left{ left:-64px; }
+@media (max-width: 900px){
+  .modal-nav{ top:auto; bottom:16px; transform:none; }
+  .modal-nav.right{ right:16px; }
+  .modal-nav.left{ left:16px; }
+  .modal-nav:hover{ transform:scale(1.08); }
+}
+
+.demo-hint{ font-size:12.5px; color: var(--text-faint); display:flex; align-items:center; gap:6px; margin-top:8px; }
+.demo-hint svg{ width:13px; height:13px; }
+
+.gif-placeholder{
+  aspect-ratio: 16/9; border-radius: var(--radius-md);
+  border: 1.5px dashed var(--border-hover);
+  background: repeating-linear-gradient(135deg, rgba(255,255,255,0.02) 0 10px, rgba(255,255,255,0.045) 10px 20px);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
+  margin-bottom: 26px; padding: 20px; text-align:center;
+}
+.gif-placeholder svg{ width:32px; height:32px; color: var(--text-faint); }
+.gif-placeholder .gif-label{ font-family: var(--font-mono); font-size:12.5px; color: var(--accent-2); }
+.gif-placeholder .gif-hint{ font-size:12px; color: var(--text-faint); max-width:320px; }
 
 /* ============ RESPONSIVE ============ */
 @media (max-width: 980px){
@@ -603,7 +641,15 @@ footer{ border-top:1px solid var(--border-soft); padding: 32px 0; }
     <button class="modal-close" id="modalClose" aria-label="Fechar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="m6 6 12 12M18 6 6 18"/></svg>
     </button>
-    <div id="modalContent"></div>
+    <div class="modal-nav right" id="modalNavRight" aria-label="Ver demonstração em GIF">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+    </div>
+    <div class="modal-nav left" id="modalNavLeft" style="display:none;" aria-label="Voltar para detalhes">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m6-6-6 6 6 6"/></svg>
+    </div>
+    <div class="modal-scroll">
+      <div id="modalContent"></div>
+    </div>
   </div>
 </div>
 
@@ -614,6 +660,7 @@ const projetos = [
     id: 'nf-conferencia',
     title: 'Conferência Inteligente de Notas Fiscais',
     flow: ['ERP', 'Automação', 'Planilha'],
+    gifPath: 'gifs/nf-conferencia.gif',
     problem: 'Cada filial exigia conferência manual de notas fiscais dentro do ERP: localizar a nota, abrir campos fiscais um a um e cruzar informações à mão — um processo lento, repetido todos os dias e sujeito a erro humano.',
     solution: 'Automação capaz de navegar automaticamente entre as filiais do ERP, localizar as notas fiscais, extrair CST, ICMS ST, Natureza da Operação e Placa/Chassi, consultar dados complementares quando necessário e consolidar tudo em uma planilha Google Sheets — pronta para a conferência humana focar só na exceção.',
     tech: ['JavaScript', 'Tampermonkey', 'Google Apps Script', 'Google Sheets', 'ERP'],
@@ -623,6 +670,7 @@ const projetos = [
     id: 'xml-extracao',
     title: 'Extração Inteligente de XML',
     flow: ['XML', 'Parser', 'Dashboard'],
+    gifPath: 'gifs/xml-extracao.gif',
     problem: 'Ler o XML de cada nota fiscal manualmente para extrair impostos, CST, CFOP e indicadores fiscais consumia um tempo que poderia ir para análise, não digitação.',
     solution: 'Parser automático que lê o XML da nota fiscal, extrai as informações fiscais relevantes — impostos, CST, CFOP, indicadores — e estrutura os dados para análise imediata, sem digitação manual.',
     tech: ['JavaScript', 'XML Parser', 'Google Apps Script'],
@@ -632,6 +680,7 @@ const projetos = [
     id: 'postgres-sheets',
     title: 'Integração PostgreSQL + Google Sheets',
     flow: ['Banco de Dados', 'Python', 'Sheets'],
+    gifPath: 'gifs/postgres-sheets.gif',
     problem: 'As planilhas usadas pelo time viviam desatualizadas em relação ao banco de dados, e cada atualização manual arriscava apagar observações já registradas pelos usuários.',
     solution: 'Aplicação em Python que consulta o banco PostgreSQL, trata os dados, preserva as observações existentes e sincroniza automaticamente as planilhas usadas pelo time — sem perda de histórico.',
     tech: ['Python', 'Pandas', 'PostgreSQL', 'Google Sheets API'],
@@ -641,6 +690,7 @@ const projetos = [
     id: 'dashboards-financeiros',
     title: 'Dashboards Financeiros',
     flow: ['Dados', 'Power BI', 'Decisão'],
+    gifPath: 'gifs/dashboards-financeiros.gif',
     problem: 'Decisões financeiras dependiam de relatórios estáticos, sem visão consolidada de indicadores operacionais em tempo real.',
     solution: 'Desenvolvimento de dashboards gerenciais em Power BI para acompanhamento financeiro, indicadores operacionais e apoio direto à tomada de decisão.',
     tech: ['Power BI', 'DAX', 'SQL'],
@@ -651,6 +701,7 @@ const projetos = [
     id: 'automacoes-financeiras',
     title: 'Automações Financeiras',
     flow: ['Tarefa Manual', 'Robô', 'Relatório'],
+    gifPath: 'gifs/automacoes-financeiras.gif',
     problem: 'Validações, preenchimentos de campos e integrações repetitivas entre sistemas ocupavam horas do time financeiro todos os meses.',
     solution: 'Conjunto de automações desenvolvidas para reduzir atividades repetitivas do setor financeiro: validações automáticas, preenchimento de campos, integrações entre sistemas e geração de relatórios.',
     tech: ['JavaScript', 'Google Apps Script', 'Automação de Processos'],
@@ -703,39 +754,88 @@ projetos.forEach((p, i) => {
 /* ============ MODAL LOGIC ============ */
 const overlay = document.getElementById('modalOverlay');
 const modalContent = document.getElementById('modalContent');
+const navRight = document.getElementById('modalNavRight');
+const navLeft = document.getElementById('modalNavLeft');
+const gifIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m9 10 5 3.2L9 16.4z"/></svg>';
 
 document.querySelectorAll('.pc-link').forEach(btn => {
   btn.addEventListener('click', () => {
     const p = projetos.find(x => x.id === btn.dataset.id);
     if(!p) return;
     modalContent.innerHTML = `
-      <h3>${p.title}</h3>
-      <div class="pc-block">
-        <div class="pc-block-label">Problema</div>
-        <p>${p.problem}</p>
+      <div class="modal-panel active" id="panelDetails">
+        <h3>${p.title}</h3>
+        <div class="pc-block">
+          <div class="pc-block-label">Problema</div>
+          <p>${p.problem}</p>
+        </div>
+        <div class="pc-block">
+          <div class="pc-block-label">Solução</div>
+          <p>${p.solution}</p>
+        </div>
+        <div class="pc-block">
+          <div class="pc-block-label">Tecnologias</div>
+          <div class="pc-tags">${p.tech.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        </div>
+        <div class="pc-block">
+          <div class="pc-block-label">Resultado</div>
+          <div class="pc-result">${p.result.map(r => `<span class="rtag">${checkIcon}${r}</span>`).join('')}</div>
+        </div>
+        ${p.powerbi ? '<a href="#" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:10px;">Abrir Power BI</a>' : ''}
+        <p class="demo-hint">${arrowIcon} Veja a automação em ação na seta ao lado</p>
       </div>
-      <div class="pc-block">
-        <div class="pc-block-label">Solução</div>
-        <p>${p.solution}</p>
+      <div class="modal-panel" id="panelDemo">
+        <h3>${p.title}</h3>
+        <div class="gif-placeholder">
+          ${gifIcon}
+          <div class="gif-label">${p.gifPath}</div>
+          <div class="gif-hint">Espaço reservado para o GIF da automação. Grave a demonstração e substitua este bloco por &lt;img src="${p.gifPath}"&gt; no código.</div>
+        </div>
+        <div class="pc-block">
+          <div class="pc-block-label">Resultado</div>
+          <div class="pc-result">${p.result.map(r => `<span class="rtag">${checkIcon}${r}</span>`).join('')}</div>
+        </div>
       </div>
-      <div class="pc-block">
-        <div class="pc-block-label">Tecnologias</div>
-        <div class="pc-tags">${p.tech.map(t => `<span class="tag">${t}</span>`).join('')}</div>
-      </div>
-      <div class="pc-block">
-        <div class="pc-block-label">Resultado</div>
-        <div class="pc-result">${p.result.map(r => `<span class="rtag">${checkIcon}${r}</span>`).join('')}</div>
-      </div>
-      ${p.powerbi ? '<a href="#" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:10px;">Abrir Power BI</a>' : ''}
     `;
+    navRight.style.display = 'flex';
+    navLeft.style.display = 'none';
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   });
 });
+
+function goToDemo(){
+  const details = document.getElementById('panelDetails');
+  const demo = document.getElementById('panelDemo');
+  if(!details || !demo) return;
+  details.classList.remove('active');
+  demo.classList.add('active');
+  navRight.style.display = 'none';
+  navLeft.style.display = 'flex';
+  document.querySelector('.modal-scroll').scrollTop = 0;
+}
+function goToDetails(){
+  const details = document.getElementById('panelDetails');
+  const demo = document.getElementById('panelDemo');
+  if(!details || !demo) return;
+  demo.classList.remove('active');
+  details.classList.add('active');
+  navLeft.style.display = 'none';
+  navRight.style.display = 'flex';
+  document.querySelector('.modal-scroll').scrollTop = 0;
+}
+navRight.addEventListener('click', goToDemo);
+navLeft.addEventListener('click', goToDetails);
+
 function closeModal(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
 document.getElementById('modalClose').addEventListener('click', closeModal);
 overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+document.addEventListener('keydown', e => {
+  if(!overlay.classList.contains('open')) return;
+  if(e.key === 'Escape') closeModal();
+  if(e.key === 'ArrowRight' && navRight.style.display !== 'none') goToDemo();
+  if(e.key === 'ArrowLeft' && navLeft.style.display !== 'none') goToDetails();
+});
 
 /* ============ MOBILE MENU ============ */
 const hamburgerBtn = document.getElementById('hamburgerBtn');
