@@ -1,35 +1,765 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Wagner Carvalho - Analista Financeiro & BI</title>
-    <meta name="description" content="Portfolio de Wagner Carvalho - Analista Financeiro especializado em Business Intelligence e Power BI" />
-    <meta name="author" content="Wagner Carvalho" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wagner Carvalho — Analista Financeiro & Automação</title>
+<meta name="description" content="Wagner Carvalho — Analista Financeiro especializado em automação de processos, BI e Power BI. Portfólio com estudos de caso reais de automação financeira.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --bg: #0A0E14;
+  --bg-elevated: #0D121B;
+  --surface: #131826;
+  --surface-glass: rgba(255,255,255,0.045);
+  --border: #212838;
+  --border-soft: #1A2030;
+  --border-hover: #323C54;
+  --text: #E9EBF2;
+  --text-muted: #8B93A7;
+  --text-faint: #545C70;
+  --accent: #6C7CFF;
+  --accent-dim: #4B57B8;
+  --accent-soft: rgba(108,124,255,0.14);
+  --accent-2: #F2B84B;
+  --accent-2-soft: rgba(242,184,75,0.14);
+  --success: #34D399;
+  --success-soft: rgba(52,211,153,0.14);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --container: 1180px;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-    <meta property="og:title" content="Wagner Carvalho - Analista Financeiro & BI" />
-    <meta property="og:description" content="Portfolio de Wagner Carvalho - Analista Financeiro especializado em Business Intelligence e Power BI" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+*, *::before, *::after{ box-sizing: border-box; margin:0; padding:0; }
+html{ scroll-behavior: smooth; }
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body{ background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(108,124,255,0.10), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(242,184,75,0.05), transparent 60%);
+  background-attachment: fixed;
+}
+img{ max-width:100%; display:block; }
+a{ color: inherit; text-decoration:none; }
+ul{ list-style:none; }
+button{ font-family: inherit; cursor:pointer; border:none; background:none; color:inherit; }
+h1,h2,h3,h4{ font-family: var(--font-display); font-weight:600; letter-spacing:-0.02em; }
+.container{ max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+section{ position: relative; padding: 128px 0; }
+::selection{ background: var(--accent); color:#fff; }
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-    
-    <style>
-      body {
-        font-family: 'Inter', sans-serif;
-      }
-    </style>
-    <script type="module" crossorigin src="/WagnerCarvalho/assets/index-dSFHVi1C.js"></script>
-    <link rel="stylesheet" crossorigin href="/WagnerCarvalho/assets/index-DS4jNrmw.css">
-  </head>
+:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
-  <body>
-    <div id="root"></div>
-  </body>
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+
+/* ============ UTILITIES ============ */
+.eyebrow{
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display:flex; align-items:center; gap:10px;
+  margin-bottom: 18px;
+}
+.eyebrow::before{ content:''; width:20px; height:1px; background: var(--accent); display:inline-block; }
+
+.section-head{ max-width: 640px; margin-bottom: 56px; }
+.section-head h2{ font-size: clamp(28px, 3.4vw, 40px); margin-bottom: 14px; }
+.section-head p{ color: var(--text-muted); font-size: 16.5px; }
+
+.reveal{ opacity:0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal.in-view{ opacity:1; transform: translateY(0); }
+
+.btn{
+  display:inline-flex; align-items:center; gap:9px;
+  padding: 13px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 14.5px; font-weight:600;
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  white-space: nowrap;
+}
+.btn-primary{ background: var(--accent); color:#0A0E14; }
+.btn-primary:hover{ background:#8391FF; transform: translateY(-2px); box-shadow: 0 10px 30px -8px rgba(108,124,255,0.55); }
+.btn-secondary{ background: var(--surface-glass); border:1px solid var(--border); color: var(--text); backdrop-filter: blur(8px); }
+.btn-secondary:hover{ border-color: var(--border-hover); transform: translateY(-2px); background: rgba(255,255,255,0.06); }
+.btn-ghost{ color: var(--text-muted); }
+.btn-ghost:hover{ color: var(--text); }
+.btn svg{ width:16px; height:16px; flex-shrink:0; }
+
+.tag{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 5px 11px;
+  border-radius: 100px;
+  border:1px solid var(--border);
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.02);
+}
+
+/* ============ NAV ============ */
+header.nav{
+  position: fixed; top:0; left:0; right:0; z-index: 100;
+  border-bottom: 1px solid var(--border-soft);
+  background: rgba(10,14,20,0.72);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+}
+.nav-inner{
+  max-width: var(--container); margin:0 auto; padding: 0 32px;
+  height: 72px; display:flex; align-items:center; justify-content:space-between;
+}
+.logo{ display:flex; align-items:center; gap:11px; font-family: var(--font-display); font-weight:600; font-size:16px; }
+.logo-mark{
+  width:34px; height:34px; border-radius:9px;
+  background: linear-gradient(135deg, var(--accent), #3D46A8);
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--font-mono); font-size:13px; font-weight:600; color:#fff;
+}
+.logo-word{ color: var(--text); }
+.logo-word span{ color: var(--text-muted); font-weight:400; }
+
+nav.main-links{ display:flex; gap:36px; }
+nav.main-links a{
+  font-size:14px; color: var(--text-muted); font-weight:500;
+  position:relative; padding: 4px 0;
+  transition: color 0.2s;
+}
+nav.main-links a:hover{ color: var(--text); }
+nav.main-links a::after{
+  content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px; background: var(--accent);
+  transition: width 0.25s var(--ease);
+}
+nav.main-links a:hover::after{ width:100%; }
+
+.nav-actions{ display:flex; align-items:center; gap:8px; }
+.icon-btn{
+  width:38px; height:38px; border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  border:1px solid var(--border); color: var(--text-muted);
+  transition: all 0.2s var(--ease);
+}
+.icon-btn:hover{ color: var(--text); border-color: var(--border-hover); background: rgba(255,255,255,0.05); transform: translateY(-2px); }
+.icon-btn svg{ width:17px; height:17px; }
+
+.hamburger{ display:none; width:38px; height:38px; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border); }
+.hamburger span, .hamburger span::before, .hamburger span::after{
+  content:''; display:block; width:16px; height:1.5px; background: var(--text); position:relative; transition: all 0.25s;
+}
+.hamburger span::before{ position:absolute; top:-5px; }
+.hamburger span::after{ position:absolute; top:5px; }
+
+.mobile-menu{
+  display:none; position:fixed; inset:72px 0 0 0; z-index:99;
+  background: rgba(10,14,20,0.98); backdrop-filter: blur(20px);
+  padding: 32px; flex-direction:column; gap:6px;
+  transform: translateY(-8px); opacity:0; pointer-events:none;
+  transition: all 0.3s var(--ease);
+}
+.mobile-menu.open{ transform: translateY(0); opacity:1; pointer-events:auto; }
+.mobile-menu a{ font-size:20px; padding:14px 4px; border-bottom:1px solid var(--border-soft); color: var(--text); font-family: var(--font-display); }
+.mobile-menu .nav-actions{ margin-top:20px; }
+
+/* ============ HERO ============ */
+.hero{ padding-top: 190px; padding-bottom: 90px; }
+.hero-grid{ display:grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items:center; }
+.hero h1{ font-size: clamp(34px, 4.6vw, 58px); line-height:1.08; margin-bottom:22px; }
+.hero h1 .hl{ color: var(--accent); }
+.hero-sub{ font-size:18px; color: var(--text-muted); max-width: 500px; margin-bottom: 36px; }
+.hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom: 56px; }
+
+.stat-row{ display:flex; gap:40px; flex-wrap:wrap; }
+.stat-row .stat-num{ font-family: var(--font-mono); font-size: 26px; color: var(--accent-2); font-weight:600; }
+.stat-row .stat-label{ font-size:12.5px; color: var(--text-muted); max-width:150px; margin-top:4px; }
+
+.hero-visual{ position:relative; }
+.flow-card{
+  background: linear-gradient(180deg, var(--surface), var(--bg-elevated));
+  border:1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 40px 28px; position:relative; overflow:hidden;
+}
+.flow-card::before{
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(400px 200px at 50% 0%, rgba(108,124,255,0.14), transparent 70%);
+  pointer-events:none;
+}
+.flow-tags{ position:absolute; font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint); border:1px solid var(--border); background: var(--bg); padding:5px 10px; border-radius:100px; }
+.ft1{ top: 18px; left: 8px; animation: drift 6s ease-in-out infinite; }
+.ft2{ bottom: 30px; right: 4px; animation: drift 7s ease-in-out infinite 1s; }
+.ft3{ top: 46%; left: -6px; animation: drift 5.5s ease-in-out infinite 0.5s; }
+@keyframes drift{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-8px);} }
+
+/* ============ ABOUT ============ */
+.about-grid{ display:grid; grid-template-columns: 1.3fr 0.9fr; gap: 60px; align-items:start; }
+.about-body p{ color: var(--text-muted); font-size:16px; margin-bottom:16px; }
+.about-body p strong{ color: var(--text); font-weight:600; }
+.edit-flag{
+  font-family: var(--font-mono); font-size:11.5px; color: var(--accent-2);
+  border:1px dashed rgba(242,184,75,0.4); background: var(--accent-2-soft);
+  padding:8px 12px; border-radius: var(--radius-sm); display:inline-block; margin-top:6px;
+}
+.facts-card{
+  background: var(--surface); border:1px solid var(--border); border-radius: var(--radius-md);
+  padding: 28px;
+}
+.facts-card .fact{ padding: 16px 0; border-bottom:1px solid var(--border-soft); }
+.facts-card .fact:last-child{ border-bottom:none; padding-bottom:0; }
+.facts-card .fact:first-child{ padding-top:0; }
+.facts-card .fact-label{ font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+.facts-card .fact-value{ font-size:15px; color: var(--text); font-weight:500; }
+
+/* ============ EXPERIENCE ============ */
+.timeline{ position:relative; padding-left: 32px; }
+.timeline::before{ content:''; position:absolute; left:5px; top:6px; bottom:6px; width:1px; background: linear-gradient(var(--border-hover), var(--border-soft)); }
+.tl-item{ position:relative; padding-bottom: 48px; }
+.tl-item:last-child{ padding-bottom:0; }
+.tl-dot{ position:absolute; left:-32px; top:4px; width:11px; height:11px; border-radius:50%; background: var(--bg); border:2px solid var(--accent); }
+.tl-item.is-current .tl-dot{ background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.tl-period{ font-family: var(--font-mono); font-size:12.5px; color: var(--accent); margin-bottom:6px; }
+.tl-role{ font-size: 19px; font-weight:600; font-family: var(--font-display); margin-bottom:2px; }
+.tl-org{ font-size:14px; color: var(--text-muted); margin-bottom:14px; }
+.tl-list{ display:flex; flex-direction:column; gap:9px; }
+.tl-list li{ font-size:14.5px; color: var(--text-muted); padding-left:18px; position:relative; }
+.tl-list li::before{ content:'—'; position:absolute; left:0; color: var(--text-faint); }
+
+/* ============ SKILLS ============ */
+.skills-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 64px; }
+.skill-group{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius-md); padding:26px; transition: border-color 0.3s; }
+.skill-group:hover{ border-color: var(--border-hover); }
+.skill-group h3{ font-size:15px; margin-bottom:18px; display:flex; align-items:center; gap:9px; }
+.skill-group h3 .dot{ width:7px; height:7px; border-radius:50%; background: var(--accent); }
+.pill-row{ display:flex; flex-wrap:wrap; gap:8px; }
+
+.stats-strip{ display:grid; grid-template-columns: repeat(3,1fr); gap:1px; background: var(--border); border-radius: var(--radius-md); overflow:hidden; border:1px solid var(--border); }
+.stat-box{ background: var(--bg-elevated); padding: 30px 26px; }
+.stat-box .num{ font-family: var(--font-mono); font-size:32px; color: var(--accent-2); font-weight:600; margin-bottom:6px; }
+.stat-box .label{ font-size:13.5px; color: var(--text-muted); }
+
+/* ============ PROJECTS ============ */
+.projects-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+.project-card{
+  background: var(--surface); border:1px solid var(--border); border-radius: var(--radius-lg);
+  overflow:hidden; display:flex; flex-direction:column;
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+.project-card:hover{ transform: translateY(-6px); border-color: var(--border-hover); box-shadow: 0 24px 48px -20px rgba(0,0,0,0.5); }
+.project-card.full{ grid-column: 1 / -1; }
+.pc-visual{
+  position:relative; height: 190px; background: linear-gradient(160deg, var(--bg-elevated), var(--surface));
+  border-bottom:1px solid var(--border-soft); overflow:hidden;
+}
+.pc-visual svg{ width:100%; height:100%; }
+.pc-body{ padding: 26px 26px 28px; display:flex; flex-direction:column; gap:16px; flex:1; }
+.pc-title{ font-size: 19px; font-family: var(--font-display); }
+.pc-block-label{ font-family: var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color: var(--text-faint); margin-bottom:5px; }
+.pc-block p{ font-size:14px; color: var(--text-muted); line-height:1.55; }
+.pc-tags{ display:flex; flex-wrap:wrap; gap:7px; }
+.pc-result{ display:flex; flex-wrap:wrap; gap:8px; }
+.pc-result .rtag{ font-size:12px; color: var(--success); background: var(--success-soft); border:1px solid rgba(52,211,153,0.25); padding:4px 10px; border-radius:100px; display:flex; align-items:center; gap:5px; }
+.pc-result .rtag svg{ width:11px; height:11px; }
+.pc-footer{ display:flex; align-items:center; justify-content:space-between; margin-top:auto; padding-top:6px; }
+.pc-link{ font-size:13.5px; font-weight:600; color: var(--accent); display:flex; align-items:center; gap:6px; }
+.pc-link svg{ width:14px; height:14px; transition: transform 0.25s var(--ease); }
+.project-card:hover .pc-link svg{ transform: translateX(4px); }
+
+/* ============ CONTACT ============ */
+.contact-box{
+  background: linear-gradient(160deg, var(--surface), var(--bg-elevated));
+  border:1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 64px; text-align:center; position:relative; overflow:hidden;
+}
+.contact-box::before{ content:''; position:absolute; inset:0; background: radial-gradient(600px 300px at 50% 0%, rgba(108,124,255,0.12), transparent 70%); pointer-events:none; }
+.contact-box h2{ font-size: clamp(26px,3.2vw,36px); margin-bottom:14px; }
+.contact-box p{ color: var(--text-muted); max-width:480px; margin: 0 auto 34px; font-size:16px; }
+.contact-actions{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+
+footer{ border-top:1px solid var(--border-soft); padding: 32px 0; }
+.footer-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+.footer-inner p{ font-size:13px; color: var(--text-faint); }
+.footer-inner .nav-actions .icon-btn{ width:34px; height:34px; }
+
+/* ============ MODAL ============ */
+.modal-overlay{
+  position:fixed; inset:0; z-index:200; background: rgba(6,8,13,0.75); backdrop-filter: blur(6px);
+  display:flex; align-items:center; justify-content:center; padding:24px;
+  opacity:0; pointer-events:none; transition: opacity 0.3s var(--ease);
+}
+.modal-overlay.open{ opacity:1; pointer-events:auto; }
+.modal{
+  background: var(--bg-elevated); border:1px solid var(--border); border-radius: var(--radius-lg);
+  max-width: 620px; width:100%; max-height:85vh; overflow-y:auto; padding: 40px;
+  transform: translateY(16px) scale(0.98); transition: transform 0.35s var(--ease);
+}
+.modal-overlay.open .modal{ transform: translateY(0) scale(1); }
+.modal-close{ position:absolute; top:24px; right:24px; width:34px; height:34px; border-radius:9px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; }
+.modal-close:hover{ border-color: var(--border-hover); }
+.modal h3{ font-size:24px; margin-bottom:24px; padding-right:40px; }
+.modal .pc-block{ margin-bottom:20px; }
+.modal .pc-tags, .modal .pc-result{ margin-bottom:4px; }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 980px){
+  .hero-grid, .about-grid{ grid-template-columns: 1fr; }
+  .hero-visual{ order:-1; max-width:420px; }
+  .skills-grid{ grid-template-columns: 1fr 1fr; }
+  .projects-grid{ grid-template-columns: 1fr; }
+  .stats-strip{ grid-template-columns: 1fr; }
+}
+@media (max-width: 760px){
+  nav.main-links{ display:none; }
+  .hamburger{ display:flex; }
+  .mobile-menu{ display:flex; }
+  section{ padding: 88px 0; }
+  .hero{ padding-top:150px; }
+  .skills-grid{ grid-template-columns: 1fr; }
+  .contact-box{ padding: 40px 24px; }
+  .nav-actions .icon-btn:not(.hamburger){ display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#home" class="logo">
+      <span class="logo-mark">WC</span>
+      <span class="logo-word">Wagner Carvalho<span> · Automação</span></span>
+    </a>
+    <nav class="main-links">
+      <a href="#home">Início</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#experiencia">Experiência</a>
+      <a href="#competencias">Competências</a>
+      <a href="#projetos">Projetos</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="icon-btn" href="https://github.com/wagnhos" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.22-3.37-1.22-.46-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.05 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.92-2.34 4.78-4.57 5.04.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg>
+      </a>
+      <a class="icon-btn" href="#" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 8.5H3.56V20.5H6.94V8.5ZM5.25 3.5C4.14 3.5 3.25 4.4 3.25 5.5C3.25 6.6 4.14 7.5 5.25 7.5C6.36 7.5 7.25 6.6 7.25 5.5C7.25 4.4 6.36 3.5 5.25 3.5ZM20.5 20.5V13.9C20.5 10.9 18.94 9.5 16.86 9.5C15.2 9.5 14.46 10.42 14.04 11.06V8.5H10.66C10.7 9.32 10.66 20.5 10.66 20.5H14.04V13.9C14.04 13.55 14.07 13.2 14.17 12.95C14.44 12.26 15.06 11.55 16.11 11.55C17.49 11.55 18.06 12.6 18.06 14.15V20.5H20.5Z"/></svg>
+      </a>
+      <a class="icon-btn" href="curriculo.pdf" target="_blank" rel="noopener" aria-label="Currículo em PDF" title="Currículo (PDF)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h7l4 4v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z"/><path d="M14 3v4h4M9 13h6M9 17h4"/></svg>
+      </a>
+      <a class="icon-btn" href="#" target="_blank" rel="noopener" aria-label="Power BI" title="Power BI">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V10M10 19V5M16 19V13M20 19V8"/></svg>
+      </a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menu"><span></span></button>
+    </div>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#home">Início</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#experiencia">Experiência</a>
+    <a href="#competencias">Competências</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#contato">Contato</a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section id="home" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <p class="eyebrow">ANALISTA FINANCEIRO · AUTOMAÇÃO · BUSINESS INTELLIGENCE</p>
+        <h1>Transformo rotinas financeiras manuais em sistemas que <span class="hl">rodam sozinhos.</span></h1>
+        <p class="hero-sub">Do ERP ao dashboard — construo as automações que tiram o financeiro do modo manual e colocam os dados para trabalhar por você.</p>
+        <div class="hero-ctas">
+          <a href="#projetos" class="btn btn-primary">Ver projetos de automação</a>
+          <a href="curriculo.pdf" target="_blank" rel="noopener" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v13m0 0 4-4m-4 4-4-4M4 20h16"/></svg>
+            Baixar currículo
+          </a>
+        </div>
+        <div class="stat-row">
+          <div><div class="stat-num">+10</div><div class="stat-label">automações em produção</div></div>
+          <div><div class="stat-num">5</div><div class="stat-label">sistemas integrados no dia a dia</div></div>
+          <div><div class="stat-num">0</div><div class="stat-label">digitação manual nos processos automatizados</div></div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal">
+        <div class="flow-card">
+          <span class="flow-tags ft1">Python</span>
+          <span class="flow-tags ft2">Power BI</span>
+          <span class="flow-tags ft3">Apps Script</span>
+          <svg viewBox="0 0 360 260" style="position:relative;z-index:1;">
+            <defs>
+              <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#6C7CFF"/>
+                <stop offset="100%" stop-color="#F2B84B"/>
+              </linearGradient>
+            </defs>
+            <line x1="70" y1="60" x2="70" y2="200" stroke="#232A3A" stroke-width="1.5"/>
+            <path d="M70,60 C70,130 180,90 180,160" stroke="url(#lineGrad)" stroke-width="2" fill="none" stroke-dasharray="6 6" class="flow-path"/>
+            <path d="M180,160 C180,90 290,130 290,200" stroke="url(#lineGrad)" stroke-width="2" fill="none" stroke-dasharray="6 6" class="flow-path" style="animation-delay:-1s"/>
+            <line x1="290" y1="60" x2="290" y2="200" stroke="#232A3A" stroke-width="1.5" opacity="0"/>
+
+            <g>
+              <rect x="30" y="34" width="80" height="52" rx="10" fill="#131826" stroke="#2A3244"/>
+              <text x="70" y="55" text-anchor="middle" fill="#E9EBF2" font-family="JetBrains Mono" font-size="12" font-weight="600">ERP</text>
+              <text x="70" y="70" text-anchor="middle" fill="#6B7386" font-family="JetBrains Mono" font-size="9">notas fiscais</text>
+            </g>
+            <g>
+              <rect x="140" y="134" width="80" height="52" rx="10" fill="#131826" stroke="#2A3244"/>
+              <text x="180" y="155" text-anchor="middle" fill="#E9EBF2" font-family="JetBrains Mono" font-size="12" font-weight="600">Script</text>
+              <text x="180" y="170" text-anchor="middle" fill="#6B7386" font-family="JetBrains Mono" font-size="9">automação</text>
+            </g>
+            <g>
+              <rect x="250" y="174" width="80" height="52" rx="10" fill="#131826" stroke="#2A3244"/>
+              <text x="290" y="195" text-anchor="middle" fill="#E9EBF2" font-family="JetBrains Mono" font-size="12" font-weight="600">Sheets</text>
+              <text x="290" y="210" text-anchor="middle" fill="#6B7386" font-family="JetBrains Mono" font-size="9">resultado</text>
+            </g>
+            <circle cx="70" cy="60" r="4" fill="#6C7CFF"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle>
+            <circle cx="180" cy="160" r="4" fill="#8891FF"><animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/></circle>
+            <circle cx="290" cy="200" r="4" fill="#F2B84B"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1s"/></circle>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE ============ -->
+  <section id="sobre">
+    <div class="container about-grid">
+      <div class="reveal">
+        <p class="eyebrow">SOBRE MIM</p>
+        <h2 style="font-size:clamp(26px,3vw,34px); margin-bottom:22px;">Financeiro por formação. Automação por necessidade.</h2>
+        <div class="about-body">
+          <p>Comecei na rotina clássica do setor financeiro — conciliação, fechamento, contas a pagar e a receber. Foi ali que percebi que boa parte do meu tempo, e do tempo do meu time, ia embora em tarefas repetitivas que um script resolvia melhor do que uma pessoa.</p>
+          <p>Hoje, no <strong>Grupo Barigui</strong>, construo as automações que eliminam esse retrabalho: do ERP ao Google Sheets, do PostgreSQL ao Power BI. Continuo sendo, antes de tudo, um Analista Financeiro — só que um que também escreve os scripts que o financeiro precisa.</p>
+          <span class="edit-flag">✎ Editar: personalize este texto com sua trajetória e tom de voz reais.</span>
+        </div>
+      </div>
+      <div class="facts-card reveal">
+        <div class="fact">
+          <div class="fact-label">Localização</div>
+          <div class="fact-value">Curitiba, PR — Brasil</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Foco</div>
+          <div class="fact-value">Automação de processos financeiros e BI</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Stack principal</div>
+          <div class="fact-value">Python · SQL · Power BI · Google Apps Script</div>
+        </div>
+        <div class="fact">
+          <div class="fact-label">Disponibilidade</div>
+          <div class="fact-value">[✎ Editar: ex. aberto a novas oportunidades]</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EXPERIÊNCIA ============ -->
+  <section id="experiencia">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">TRAJETÓRIA</p>
+        <h2>Experiência</h2>
+        <p>Uma linha do tempo construída sobre problemas reais resolvidos com automação.</p>
+      </div>
+      <div class="timeline">
+        <div class="tl-item is-current reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-period">[✎ Editar período] — Atual</div>
+          <div class="tl-role">Analista Financeiro</div>
+          <div class="tl-org">Grupo Barigui</div>
+          <ul class="tl-list">
+            <li>Automatizou a conferência fiscal de notas fiscais entre filiais do ERP, eliminando a conferência manual campo a campo.</li>
+            <li>Desenvolveu integração PostgreSQL ↔ Google Sheets para contas a pagar e a receber, preservando observações já lançadas pelo time.</li>
+            <li>Criou travas e validações automáticas em telas do ERP (lançamentos e tesouraria) para reduzir erro de digitação.</li>
+            <li>Estruturou dashboards em Power BI para acompanhamento financeiro e operacional.</li>
+          </ul>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-period">[✎ Editar período]</div>
+          <div class="tl-role">[✎ Editar cargo anterior]</div>
+          <div class="tl-org">[✎ Editar empresa anterior]</div>
+          <ul class="tl-list">
+            <li>[✎ Editar: descreva uma responsabilidade real deste período]</li>
+            <li>[✎ Editar: descreva um resultado obtido]</li>
+          </ul>
+        </div>
+        <div class="tl-item reveal">
+          <div class="tl-dot"></div>
+          <div class="tl-period">[✎ Editar ano]</div>
+          <div class="tl-role">[✎ Editar curso]</div>
+          <div class="tl-org">[✎ Editar instituição de ensino]</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMPETÊNCIAS ============ -->
+  <section id="competencias">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">STACK & COMPETÊNCIAS</p>
+        <h2>O que eu uso para resolver</h2>
+        <p>Ferramentas de automação, análise e financeiro — combinadas para eliminar retrabalho.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-group reveal">
+          <h3><span class="dot"></span>Automação & Integração</h3>
+          <div class="pill-row">
+            <span class="tag">JavaScript</span><span class="tag">Tampermonkey</span><span class="tag">Google Apps Script</span><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">PostgreSQL</span><span class="tag">Google Sheets API</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h3><span class="dot"></span>Análise & BI</h3>
+          <div class="pill-row">
+            <span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">SQL</span><span class="tag">Excel Avançado</span><span class="tag">Looker Studio</span>
+          </div>
+        </div>
+        <div class="skill-group reveal">
+          <h3><span class="dot"></span>Financeiro</h3>
+          <div class="pill-row">
+            <span class="tag">Conciliação Fiscal</span><span class="tag">Contas a Pagar</span><span class="tag">Contas a Receber</span><span class="tag">Tesouraria</span><span class="tag">Fluxo de Caixa</span>
+          </div>
+        </div>
+      </div>
+      <div class="stats-strip reveal">
+        <div class="stat-box"><div class="num">+10</div><div class="label">automações desenvolvidas e em uso</div></div>
+        <div class="stat-box"><div class="num">5</div><div class="label">tecnologias no dia a dia (Python, Power BI, SQL, Apps Script, JavaScript)</div></div>
+        <div class="stat-box"><div class="num">0</div><div class="label">digitação manual nos processos automatizados</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJETOS ============ -->
+  <section id="projetos">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">PROJETOS DE AUTOMAÇÃO</p>
+        <h2>Estudos de caso, não linhas de código</h2>
+        <p>Cada card abaixo resolve um problema real do financeiro. Sem mostrar código — mostrando o resultado de negócio.</p>
+      </div>
+      <div class="projects-grid" id="projectsGrid"><!-- preenchido via JS --></div>
+    </div>
+  </section>
+
+  <!-- ============ CONTATO ============ -->
+  <section id="contato">
+    <div class="container">
+      <div class="contact-box reveal">
+        <p class="eyebrow" style="justify-content:center;">VAMOS CONVERSAR</p>
+        <h2>Seu financeiro ainda perde tempo com rotina manual?</h2>
+        <p>Se sua empresa tem processos repetitivos no financeiro, existe uma boa chance de eu já ter resolvido um problema parecido.</p>
+        <div class="contact-actions">
+          <a href="mailto:seuemail@exemplo.com" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
+            Enviar e-mail
+          </a>
+          <a href="#" target="_blank" rel="noopener" class="btn btn-secondary">LinkedIn</a>
+          <a href="https://github.com/wagnhos" target="_blank" rel="noopener" class="btn btn-secondary">GitHub</a>
+          <a href="curriculo.pdf" target="_blank" rel="noopener" class="btn btn-secondary">Currículo PDF</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <p>© 2026 Wagner Carvalho — construído com foco em automação e resultado.</p>
+    <div class="nav-actions">
+      <a class="icon-btn" href="https://github.com/wagnhos" target="_blank" rel="noopener" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.22-3.37-1.22-.46-1.19-1.11-1.51-1.11-1.51-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.89 1.56 2.34 1.11 2.91.85.09-.66.35-1.11.63-1.37-2.22-.26-4.56-1.14-4.56-5.05 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.31.1-2.72 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.75 0 3.92-2.34 4.78-4.57 5.04.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.03 10.03 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/></svg></a>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ MODAL ============ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="16" height="16"><path d="m6 6 12 12M18 6 6 18"/></svg>
+    </button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+/* ============ DATA: PROJETOS ============ */
+const projetos = [
+  {
+    id: 'nf-conferencia',
+    title: 'Conferência Inteligente de Notas Fiscais',
+    flow: ['ERP', 'Automação', 'Planilha'],
+    problem: 'Cada filial exigia conferência manual de notas fiscais dentro do ERP: localizar a nota, abrir campos fiscais um a um e cruzar informações à mão — um processo lento, repetido todos os dias e sujeito a erro humano.',
+    solution: 'Automação capaz de navegar automaticamente entre as filiais do ERP, localizar as notas fiscais, extrair CST, ICMS ST, Natureza da Operação e Placa/Chassi, consultar dados complementares quando necessário e consolidar tudo em uma planilha Google Sheets — pronta para a conferência humana focar só na exceção.',
+    tech: ['JavaScript', 'Tampermonkey', 'Google Apps Script', 'Google Sheets', 'ERP'],
+    result: ['Redução do trabalho manual', 'Padronização da conferência fiscal', 'Maior confiabilidade dos dados', 'Processamento em lote']
+  },
+  {
+    id: 'xml-extracao',
+    title: 'Extração Inteligente de XML',
+    flow: ['XML', 'Parser', 'Dashboard'],
+    problem: 'Ler o XML de cada nota fiscal manualmente para extrair impostos, CST, CFOP e indicadores fiscais consumia um tempo que poderia ir para análise, não digitação.',
+    solution: 'Parser automático que lê o XML da nota fiscal, extrai as informações fiscais relevantes — impostos, CST, CFOP, indicadores — e estrutura os dados para análise imediata, sem digitação manual.',
+    tech: ['JavaScript', 'XML Parser', 'Google Apps Script'],
+    result: ['Eliminação da digitação manual', 'Maior velocidade de processamento', 'Padronização dos dados extraídos']
+  },
+  {
+    id: 'postgres-sheets',
+    title: 'Integração PostgreSQL + Google Sheets',
+    flow: ['Banco de Dados', 'Python', 'Sheets'],
+    problem: 'As planilhas usadas pelo time viviam desatualizadas em relação ao banco de dados, e cada atualização manual arriscava apagar observações já registradas pelos usuários.',
+    solution: 'Aplicação em Python que consulta o banco PostgreSQL, trata os dados, preserva as observações existentes e sincroniza automaticamente as planilhas usadas pelo time — sem perda de histórico.',
+    tech: ['Python', 'Pandas', 'PostgreSQL', 'Google Sheets API'],
+    result: ['Integração automática', 'Zero perda de observações', 'Atualização em poucos minutos']
+  },
+  {
+    id: 'dashboards-financeiros',
+    title: 'Dashboards Financeiros',
+    flow: ['Dados', 'Power BI', 'Decisão'],
+    problem: 'Decisões financeiras dependiam de relatórios estáticos, sem visão consolidada de indicadores operacionais em tempo real.',
+    solution: 'Desenvolvimento de dashboards gerenciais em Power BI para acompanhamento financeiro, indicadores operacionais e apoio direto à tomada de decisão.',
+    tech: ['Power BI', 'DAX', 'SQL'],
+    result: ['Visão consolidada de indicadores', 'Decisões mais rápidas', 'Menos relatórios manuais'],
+    powerbi: true
+  },
+  {
+    id: 'automacoes-financeiras',
+    title: 'Automações Financeiras',
+    flow: ['Tarefa Manual', 'Robô', 'Relatório'],
+    problem: 'Validações, preenchimentos de campos e integrações repetitivas entre sistemas ocupavam horas do time financeiro todos os meses.',
+    solution: 'Conjunto de automações desenvolvidas para reduzir atividades repetitivas do setor financeiro: validações automáticas, preenchimento de campos, integrações entre sistemas e geração de relatórios.',
+    tech: ['JavaScript', 'Google Apps Script', 'Automação de Processos'],
+    result: ['Menos horas em tarefas repetitivas', 'Menos erro humano', 'Relatórios gerados automaticamente']
+  }
+];
+
+const checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7"/></svg>';
+const arrowIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>';
+
+function flowSVG(labels){
+  return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid meet">
+    <line x1="45" y1="65" x2="150" y2="65" stroke="#2A3244" stroke-width="1.5"/>
+    <line x1="150" y1="65" x2="255" y2="65" stroke="#2A3244" stroke-width="1.5"/>
+    <path d="M45,65 L150,65" stroke="#6C7CFF" stroke-width="2" stroke-dasharray="5 6" class="flow-path"/>
+    <path d="M150,65 L255,65" stroke="#F2B84B" stroke-width="2" stroke-dasharray="5 6" class="flow-path" style="animation-delay:-1.2s"/>
+    <g><rect x="10" y="42" width="70" height="46" rx="9" fill="#131826" stroke="#2A3244"/>
+      <text x="45" y="70" text-anchor="middle" fill="#E9EBF2" font-family="JetBrains Mono" font-size="10.5" font-weight="600">${labels[0]}</text></g>
+    <g><rect x="115" y="42" width="70" height="46" rx="9" fill="#131826" stroke="#2A3244"/>
+      <text x="150" y="70" text-anchor="middle" fill="#E9EBF2" font-family="JetBrains Mono" font-size="10.5" font-weight="600">${labels[1]}</text></g>
+    <g><rect x="220" y="42" width="70" height="46" rx="9" fill="#131826" stroke="#2A3244"/>
+      <text x="255" y="70" text-anchor="middle" fill="#E9EBF2" font-family="JetBrains Mono" font-size="10.5" font-weight="600">${labels[2]}</text></g>
+  </svg>`;
+}
+
+const grid = document.getElementById('projectsGrid');
+projetos.forEach((p, i) => {
+  const card = document.createElement('article');
+  card.className = 'project-card reveal' + (p.powerbi ? ' full' : '');
+  card.style.transitionDelay = (i * 0.06) + 's';
+  card.innerHTML = `
+    <div class="pc-visual">${flowSVG(p.flow)}</div>
+    <div class="pc-body">
+      <h3 class="pc-title">${p.title}</h3>
+      <div class="pc-block">
+        <div class="pc-block-label">Problema</div>
+        <p>${p.problem}</p>
+      </div>
+      <div class="pc-tags">${p.tech.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      <div class="pc-result">${p.result.slice(0,2).map(r => `<span class="rtag">${checkIcon}${r}</span>`).join('')}</div>
+      <div class="pc-footer">
+        <button class="pc-link" data-id="${p.id}">Ver detalhes ${arrowIcon}</button>
+        ${p.powerbi ? '<a href="#" target="_blank" rel="noopener" class="btn btn-secondary" style="padding:8px 16px;font-size:13px;">Abrir Power BI</a>' : ''}
+      </div>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+
+/* ============ MODAL LOGIC ============ */
+const overlay = document.getElementById('modalOverlay');
+const modalContent = document.getElementById('modalContent');
+
+document.querySelectorAll('.pc-link').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const p = projetos.find(x => x.id === btn.dataset.id);
+    if(!p) return;
+    modalContent.innerHTML = `
+      <h3>${p.title}</h3>
+      <div class="pc-block">
+        <div class="pc-block-label">Problema</div>
+        <p>${p.problem}</p>
+      </div>
+      <div class="pc-block">
+        <div class="pc-block-label">Solução</div>
+        <p>${p.solution}</p>
+      </div>
+      <div class="pc-block">
+        <div class="pc-block-label">Tecnologias</div>
+        <div class="pc-tags">${p.tech.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+      </div>
+      <div class="pc-block">
+        <div class="pc-block-label">Resultado</div>
+        <div class="pc-result">${p.result.map(r => `<span class="rtag">${checkIcon}${r}</span>`).join('')}</div>
+      </div>
+      ${p.powerbi ? '<a href="#" target="_blank" rel="noopener" class="btn btn-primary" style="margin-top:10px;">Abrir Power BI</a>' : ''}
+    `;
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+});
+function closeModal(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('modalClose').addEventListener('click', closeModal);
+overlay.addEventListener('click', e => { if(e.target === overlay) closeModal(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+
+/* ============ MOBILE MENU ============ */
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+/* ============ SCROLL REVEAL ============ */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('in-view');
+      io.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+</script>
+
+<style>
+.flow-path{ animation: dash 3s linear infinite; }
+@keyframes dash{ to{ stroke-dashoffset: -22; } }
+</style>
+
+</body>
 </html>
