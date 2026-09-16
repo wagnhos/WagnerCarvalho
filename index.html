@@ -11,330 +11,348 @@
 <style>
 /* ============ TOKENS ============ */
 :root{
-  color-scheme: dark;
-
-  /* Paleta */
-  --ink:      #0B0F14;
-  --navy:     #24303E;
-  --navy-2:   #1B2431;   /* cards na parte escura */
-  --navy-3:   #3A4757;   /* bordas na parte escura */
-  --slate:    #64748B;
-  --stone:    #0F172A;
-  --paper:    #F8FAFC;
-  --white:    #FFFFFF;
-  --ink-soft: #3F4C5C;   /* texto secundário sobre o cinza do topo */
-
-  /* Azul de marca */
-  --accent:        #3F4FDB;  /* sobre fundo claro */
-  --accent-strong: #2B39B8;
-  --accent-light:  #8A97FF;  /* sobre fundo escuro */
-
+  --bg: #1F2733;
+  --bg-elevated: #262F3D;
+  --surface: #2D3647;
+  --surface-glass: rgba(255,255,255,0.06);
+  --border: #3E4A60;
+  --border-soft: #364154;
+  --border-hover: #58657F;
+  --text: #F2F4F8;
+  --text-muted: #AAB2C3;
+  --text-faint: #808799;
+  --accent: #949FFF;
+  --accent-dim: #6C78D8;
+  --accent-soft: rgba(148,159,255,0.16);
+  --accent-2: #F8D083;
+  --accent-2-soft: rgba(248,208,131,0.16);
+  --success: #62E4B6;
+  --success-soft: rgba(98,228,182,0.16);
   --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
   --font-display: 'Space Grotesk', sans-serif;
   --font-body: 'Inter', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
-  --container: 1120px;
+  --container: 1180px;
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after{ box-sizing: border-box; margin:0; padding:0; }
-html{ scroll-behavior: smooth; background: var(--navy); }
+html{ scroll-behavior: smooth; }
 body{
-  /* degradê contínuo: cinza médio no topo → navy embaixo */
-  background-image: linear-gradient(180deg,
-    #0F172A 0%,
-    #C3CFDC 20%,
-    #AAB8C8 32%,
-    #7F8D9E 45%,
-    #4E5D70 58%,
-    #334250 72%,
-    #24303E 86%,
-    #24303E 100%);
-  background-repeat: no-repeat;
-  color: var(--navy);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.65;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+body{ background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(148,159,255,0.16), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(248,208,131,0.07), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.05), transparent 45%);
+  background-attachment: fixed;
 }
 img{ max-width:100%; display:block; }
 a{ color: inherit; text-decoration:none; }
 ul{ list-style:none; }
 button{ font-family: inherit; cursor:pointer; border:none; background:none; color:inherit; }
-h1,h2,h3,h4{ font-family: var(--font-display); font-weight:600; letter-spacing:-0.022em; color: var(--ink); }
-.container{ max-width: var(--container); margin: 0 auto; padding: 0 28px; }
-section{ position: relative; padding: 100px 0; background: transparent; }
-::selection{ background: var(--accent); color:#fff; }
+h1,h2,h3,h4{ font-family: var(--font-display); font-weight:600; letter-spacing:-0.02em; }
+.container{ max-width: var(--container); margin: 0 auto; padding: 0 32px; }
+section{ position: relative; padding: 128px 0; }
+::selection{ background: var(--accent); color:#1F2733; }
 
-:focus-visible{ outline: 2px solid var(--accent-light); outline-offset: 3px; border-radius: 4px; }
+:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
 
 @media (prefers-reduced-motion: reduce){
   *, *::before, *::after{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
 
-/* ============ CONTEXTOS DE COR ============ */
-.on-light h2, .on-light h3{ color: var(--ink); }
-.on-light .section-head p, .on-light .kicker, .on-light .hero-sub{ color: var(--ink-soft); }
+/* ============ UTILITIES ============ */
+.eyebrow{
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display:flex; align-items:center; gap:10px;
+  margin-bottom: 18px;
+}
+.eyebrow::before{ content:''; width:20px; height:1px; background: var(--accent); display:inline-block; }
 
-.on-dark h2, .on-dark h3{ color: var(--white); }
-.on-dark .section-head p{ color: var(--stone); }
+.section-head{ max-width: 640px; margin-bottom: 56px; }
+.section-head h2{ font-size: clamp(28px, 3.4vw, 40px); margin-bottom: 14px; }
+.section-head p{ color: var(--text-muted); font-size: 16.5px; }
 
-/* ============ UTILITÁRIOS ============ */
-.kicker{ font-size: 13.5px; font-weight:500; margin-bottom: 14px; }
-
-.section-head{ max-width: 620px; margin-bottom: 46px; }
-.section-head h2{ font-size: clamp(27px, 3.2vw, 36px); margin-bottom: 10px; }
-.section-head p{ font-size: 16px; }
-
-.reveal{ opacity:0; transform: translateY(14px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.reveal{ opacity:0; transform: translateY(22px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
 .reveal.in-view{ opacity:1; transform: translateY(0); }
 
 .btn{
   display:inline-flex; align-items:center; gap:9px;
-  padding: 12px 22px; border-radius: var(--radius-sm);
+  padding: 13px 24px;
+  border-radius: var(--radius-sm);
   font-size: 14.5px; font-weight:600;
-  transition: background 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease);
+  transition: transform 0.25s var(--ease), background 0.25s var(--ease), border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
   white-space: nowrap;
 }
-.btn-primary{ background: var(--accent); color:#fff; }
-.btn-primary:hover{ background: var(--accent-strong); }
-.btn-secondary{ background: var(--white); border:1px solid var(--white); color: var(--navy); }
-.btn-secondary:hover{ background: transparent; color: var(--ink); border-color: var(--ink); }
+.btn-primary{ background: var(--accent); color:#1C2430; }
+.btn-primary:hover{ background:#A9B2FF; transform: translateY(-2px); box-shadow: 0 10px 30px -8px rgba(148,159,255,0.55); }
+.btn-secondary{ background: var(--surface-glass); border:1px solid var(--border); color: var(--text); backdrop-filter: blur(8px); }
+.btn-secondary:hover{ border-color: var(--border-hover); transform: translateY(-2px); background: rgba(255,255,255,0.09); }
+.btn-ghost{ color: var(--text-muted); }
+.btn-ghost:hover{ color: var(--text); }
 .btn svg{ width:16px; height:16px; flex-shrink:0; }
 
-.on-dark .btn-secondary{ background: transparent; border-color: var(--slate); color: var(--white); }
-.on-dark .btn-secondary:hover{ background: var(--white); border-color: var(--white); color: var(--navy); }
-.on-dark .btn-primary{ background: var(--accent); color:#fff; }
-.on-dark .btn-primary:hover{ background: var(--accent-light); color: var(--ink); }
-
 .tag{
-  font-family: var(--font-mono); font-size: 11.5px;
-  padding: 4px 10px; border-radius: 100px;
-  border:1px solid var(--stone); color: var(--slate); background: var(--white);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 5px 11px;
+  border-radius: 100px;
+  border:1px solid var(--border);
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.03);
 }
-.on-dark .tag{ border-color: var(--navy-3); color: var(--stone); background: rgba(203,213,225,0.05); }
 
 /* ============ NAV ============ */
 header.nav{
   position: fixed; top:0; left:0; right:0; z-index: 100;
-  border-bottom: 1px solid rgba(11,15,20,0.12);
-  background: rgba(203,213,225,0.86);
-  backdrop-filter: blur(12px) saturate(140%);
-  -webkit-backdrop-filter: blur(12px) saturate(140%);
+  border-bottom: 1px solid var(--border-soft);
+  background: rgba(31,39,51,0.74);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
 .nav-inner{
-  max-width: var(--container); margin:0 auto; padding: 0 28px;
-  height: 68px; display:flex; align-items:center; justify-content:space-between;
+  max-width: var(--container); margin:0 auto; padding: 0 32px;
+  height: 72px; display:flex; align-items:center; justify-content:space-between;
 }
-.logo{ display:flex; align-items:center; gap:10px; font-family: var(--font-display); font-weight:600; font-size:15.5px; }
+.logo{ display:flex; align-items:center; gap:11px; font-family: var(--font-display); font-weight:600; font-size:16px; }
 .logo-mark{
-  width:32px; height:32px; border-radius:8px;
-  background: var(--navy); color: var(--white);
+  width:34px; height:34px; border-radius:9px;
+  background: linear-gradient(135deg, var(--accent), #5E6AD0);
   display:flex; align-items:center; justify-content:center;
-  font-family: var(--font-mono); font-size:12.5px; font-weight:600;
+  font-family: var(--font-mono); font-size:13px; font-weight:600; color:#1C2430;
 }
-.logo-word{ color: var(--ink); }
-.logo-word span{ color: var(--ink-soft); font-weight:400; }
+.logo-word{ color: var(--text); }
+.logo-word span{ color: var(--text-muted); font-weight:400; }
 
-nav.main-links{ display:flex; gap:30px; }
-nav.main-links a{ font-size:14px; color: var(--ink-soft); font-weight:500; padding:4px 0; transition: color 0.2s; }
-nav.main-links a:hover{ color: var(--ink); }
+nav.main-links{ display:flex; gap:36px; }
+nav.main-links a{
+  font-size:14px; color: var(--text-muted); font-weight:500;
+  position:relative; padding: 4px 0;
+  transition: color 0.2s;
+}
+nav.main-links a:hover{ color: var(--text); }
+nav.main-links a::after{
+  content:''; position:absolute; left:0; bottom:-2px; width:0; height:1px; background: var(--accent);
+  transition: width 0.25s var(--ease);
+}
+nav.main-links a:hover::after{ width:100%; }
 
 .nav-actions{ display:flex; align-items:center; gap:8px; }
 .icon-btn{
-  width:36px; height:36px; border-radius:9px;
+  width:38px; height:38px; border-radius:10px;
   display:flex; align-items:center; justify-content:center;
-  border:1px solid rgba(11,15,20,0.18); color: var(--navy); background: transparent;
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+  border:1px solid var(--border); color: var(--text-muted);
+  transition: all 0.2s var(--ease);
 }
-.icon-btn:hover{ color: var(--white); border-color: var(--navy); background: var(--navy); }
+.icon-btn:hover{ color: var(--text); border-color: var(--border-hover); background: rgba(255,255,255,0.07); transform: translateY(-2px); }
 .icon-btn svg{ width:17px; height:17px; }
 
-.hamburger{ display:none; width:36px; height:36px; align-items:center; justify-content:center; border-radius:9px; border:1px solid rgba(11,15,20,0.18); }
+.hamburger{ display:none; width:38px; height:38px; align-items:center; justify-content:center; border-radius:10px; border:1px solid var(--border); }
 .hamburger span, .hamburger span::before, .hamburger span::after{
-  content:''; display:block; width:16px; height:1.5px; background: var(--navy); position:relative;
+  content:''; display:block; width:16px; height:1.5px; background: var(--text); position:relative; transition: all 0.25s;
 }
 .hamburger span::before{ position:absolute; top:-5px; }
 .hamburger span::after{ position:absolute; top:5px; }
 
 .mobile-menu{
-  display:none; position:fixed; inset:68px 0 0 0; z-index:99;
-  background: #0F172A; padding: 28px; flex-direction:column;
-  opacity:0; pointer-events:none; transition: opacity 0.25s var(--ease);
+  display:none; position:fixed; inset:72px 0 0 0; z-index:99;
+  background: rgba(31,39,51,0.98); backdrop-filter: blur(20px);
+  padding: 32px; flex-direction:column; gap:6px;
+  transform: translateY(-8px); opacity:0; pointer-events:none;
+  transition: all 0.3s var(--ease);
 }
-.mobile-menu.open{ opacity:1; pointer-events:auto; }
-.mobile-menu a{ font-size:19px; padding:14px 2px; border-bottom:1px solid rgba(11,15,20,0.14); color: var(--ink); font-family: var(--font-display); }
+.mobile-menu.open{ transform: translateY(0); opacity:1; pointer-events:auto; }
+.mobile-menu a{ font-size:20px; padding:14px 4px; border-bottom:1px solid var(--border-soft); color: var(--text); font-family: var(--font-display); }
+.mobile-menu .nav-actions{ margin-top:20px; }
 
 /* ============ HERO ============ */
-.hero{ padding-top: 150px; padding-bottom: 92px; }
-.hero-grid{ display:grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px; align-items:center; }
-.hero h1{ font-size: clamp(33px, 4.4vw, 54px); line-height:1.06; margin-bottom:20px; }
+.hero{ padding-top: 190px; padding-bottom: 90px; }
+.hero-grid{ display:grid; grid-template-columns: 1.05fr 0.95fr; gap: 60px; align-items:center; }
+.hero h1{ font-size: clamp(34px, 4.6vw, 58px); line-height:1.08; margin-bottom:22px; }
 .hero h1 .hl{ color: var(--accent); }
-.hero-sub{ font-size:17.5px; max-width: 46ch; margin-bottom: 32px; }
-.hero-ctas{ display:flex; gap:12px; flex-wrap:wrap; }
+.hero-sub{ font-size:18px; color: var(--text-muted); max-width: 500px; margin-bottom: 36px; }
+.hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; margin-bottom: 56px; }
+
+.stat-row{ display:flex; gap:40px; flex-wrap:wrap; }
+.stat-row .stat-num{ font-family: var(--font-mono); font-size: 26px; color: var(--accent-2); font-weight:600; }
+.stat-row .stat-label{ font-size:12.5px; color: var(--text-muted); max-width:150px; margin-top:4px; }
 
 .hero-visual{ position:relative; }
-.flow-card{ background: var(--ink); border-radius: var(--radius-lg); padding: 34px 24px; position:relative; }
-.flow-tags{
-  position:absolute; font-family: var(--font-mono); font-size:11px; color: var(--navy);
-  border:1px solid rgba(11,15,20,0.15); background: var(--paper); padding:4px 10px; border-radius:100px;
+.flow-card{
+  background: linear-gradient(180deg, var(--surface), var(--bg-elevated));
+  border:1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 40px 28px; position:relative; overflow:hidden;
 }
-.ft1{ top: 18px; left: -12px; }
-.ft2{ bottom: 28px; right: -10px; }
-.ft3{ top: 46%; left: -16px; }
+.flow-card::before{
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(400px 200px at 50% 0%, rgba(148,159,255,0.18), transparent 70%);
+  pointer-events:none;
+}
+.flow-tags{ position:absolute; font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint); border:1px solid var(--border); background: var(--bg); padding:5px 10px; border-radius:100px; }
+.ft1{ top: 18px; left: 8px; animation: drift 6s ease-in-out infinite; }
+.ft2{ bottom: 30px; right: 4px; animation: drift 7s ease-in-out infinite 1s; }
+.ft3{ top: 46%; left: -6px; animation: drift 5.5s ease-in-out infinite 0.5s; }
+@keyframes drift{ 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-8px);} }
 
-/* ============ SOBRE ============ */
-.about-grid{ display:grid; grid-template-columns: 1.25fr 0.85fr; gap: 56px; align-items:start; }
-.about-body p{ color: var(--ink-soft); font-size:16px; max-width: 64ch; margin-bottom:16px; }
+/* ============ ABOUT ============ */
+.about-grid{ display:grid; grid-template-columns: 1.3fr 0.9fr; gap: 60px; align-items:start; }
+.about-body p{ color: var(--text-muted); font-size:16px; margin-bottom:16px; }
+.about-body p strong{ color: var(--text); font-weight:600; }
+.facts-card{
+  background: linear-gradient(180deg, var(--surface), var(--bg-elevated));
+  border:1px solid var(--border); border-radius: var(--radius-md);
+  padding: 28px;
+}
+.facts-card .fact{ padding: 16px 0; border-bottom:1px solid var(--border-soft); }
+.facts-card .fact:last-child{ border-bottom:none; padding-bottom:0; }
+.facts-card .fact:first-child{ padding-top:0; }
+.facts-card .fact-label{ font-family: var(--font-mono); font-size:11.5px; color: var(--text-faint); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px; }
+.facts-card .fact-value{ font-size:15px; color: var(--text); font-weight:500; }
+.facts-card .fact:last-child .fact-value{ color: var(--accent-2); }
 
-.facts-card{ background: var(--navy); border-radius: var(--radius-md); padding: 10px 26px; }
-.facts-card .fact{ padding: 18px 0; border-bottom:1px solid rgba(203,213,225,0.16); }
-.facts-card .fact:last-child{ border-bottom:none; }
-.facts-card .fact-label{ font-size:13px; color: var(--stone); margin-bottom:2px; }
-.facts-card .fact-value{ font-size:15.5px; color: var(--white); font-weight:500; }
-.facts-card .fact:last-child .fact-value{ color: var(--accent-light); }
+/* ============ EXPERIENCE ============ */
+.timeline{ position:relative; padding-left: 32px; }
+.timeline::before{ content:''; position:absolute; left:5px; top:6px; bottom:6px; width:1px; background: linear-gradient(var(--border-hover), var(--border-soft)); }
+.tl-item{ position:relative; padding-bottom: 48px; }
+.tl-item:last-child{ padding-bottom:0; }
+.tl-dot{ position:absolute; left:-32px; top:4px; width:11px; height:11px; border-radius:50%; background: var(--bg); border:2px solid var(--accent); }
+.tl-item.is-current .tl-dot{ background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft); }
+.tl-period{ font-family: var(--font-mono); font-size:12.5px; color: var(--accent); margin-bottom:6px; }
+.tl-role{ font-size: 19px; font-weight:600; font-family: var(--font-display); margin-bottom:2px; }
+.tl-org{ font-size:14px; color: var(--text-muted); margin-bottom:14px; }
+.tl-list{ display:flex; flex-direction:column; gap:9px; }
+.tl-list li{ font-size:14.5px; color: var(--text-muted); padding-left:18px; position:relative; }
+.tl-list li::before{ content:'—'; position:absolute; left:0; color: var(--text-faint); }
 
-/* ============ EXPERIÊNCIA ============ */
-.timeline{ position:relative; padding-left: 34px; max-width: 800px; }
-.timeline::before{ content:''; position:absolute; left:5px; top:10px; bottom:10px; width:1px; background: rgba(11,15,20,0.22); }
-.tl-item{ position:relative; margin-bottom: 18px; }
-.tl-item:last-child{ margin-bottom:0; }
-.tl-dot{ position:absolute; left:-34px; top:30px; width:11px; height:11px; border-radius:50%; background: var(--paper); border:2px solid var(--navy); }
-.tl-item.is-current .tl-dot{ background: var(--accent); border-color: var(--accent); }
-.tl-card{ background: var(--paper); border:1px solid rgba(11,15,20,0.10); border-radius: var(--radius-md); padding: 24px 26px; }
-.tl-item.is-current .tl-card{ border-left: 3px solid var(--accent); }
-.tl-period{ font-size:13px; color: var(--slate); margin-bottom:4px; font-variant-numeric: tabular-nums; }
-.tl-item.is-current .tl-period{ color: var(--accent); font-weight:600; }
-.tl-role{ font-size: 19px; font-weight:600; font-family: var(--font-display); margin-bottom:1px; color: var(--ink); }
-.tl-org{ font-size:14.5px; color: var(--slate); margin-bottom:14px; }
-.tl-card .tl-org:last-child{ margin-bottom:0; }
-.tl-list{ display:flex; flex-direction:column; gap:8px; }
-.tl-list li{ font-size:15px; color: var(--navy); padding-left:16px; position:relative; max-width: 68ch; }
-.tl-list li::before{ content:''; position:absolute; left:0; top:11px; width:6px; height:1px; background: var(--slate); }
+/* ============ SKILLS ============ */
+.skills-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+.skill-group{ background: var(--surface); border:1px solid var(--border); border-radius: var(--radius-md); padding:26px; transition: border-color 0.3s; }
+.skill-group:hover{ border-color: var(--border-hover); }
+.skill-group h3{ font-size:15px; margin-bottom:18px; display:flex; align-items:center; gap:9px; }
+.skill-group h3 .dot{ width:7px; height:7px; border-radius:50%; background: var(--accent); }
+.pill-row{ display:flex; flex-wrap:wrap; gap:8px; }
 
-/* ============ COMPETÊNCIAS ============ */
-.skills-grid{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.skill-group{ background: rgba(11,15,20,0.30); border:1px solid var(--navy-3); border-radius: var(--radius-md); padding:24px; }
-.skill-group h3{ font-size:15px; margin-bottom:16px; display:flex; align-items:center; gap:9px; }
-.skill-group h3 .dot{ width:7px; height:7px; border-radius:50%; background: var(--accent-light); }
-.pill-row{ display:flex; flex-wrap:wrap; gap:7px; }
-
-/* ============ PROJETOS ============ */
-.projects-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 22px; }
+/* ============ PROJECTS ============ */
+.projects-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
 .project-card{
-  background: var(--navy-2); border:1px solid var(--navy-3); border-radius: var(--radius-lg);
+  background: var(--surface); border:1px solid var(--border); border-radius: var(--radius-lg);
   overflow:hidden; display:flex; flex-direction:column;
-  transition: border-color 0.25s var(--ease);
+  transition: transform 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
 }
-.project-card:hover{ border-color: var(--slate); }
-.project-card.full{ grid-column: 1 / -1; background: var(--stone); border-color: var(--stone); }
-.project-card.full:hover{ border-color: var(--white); }
-.pc-visual{ position:relative; height: 164px; background: var(--ink); border-bottom:1px solid var(--navy-3); overflow:hidden; }
-.project-card.full .pc-visual{ background: var(--paper); border-bottom-color: rgba(11,15,20,0.12); }
+.project-card:hover{ transform: translateY(-6px); border-color: var(--border-hover); box-shadow: 0 24px 48px -20px rgba(0,0,0,0.38); }
+.project-card.full{ grid-column: 1 / -1; }
+.pc-visual{
+  position:relative; height: 190px; background: linear-gradient(160deg, var(--bg-elevated), var(--surface));
+  border-bottom:1px solid var(--border-soft); overflow:hidden;
+}
 .pc-visual svg{ width:100%; height:100%; }
-.pc-body{ padding: 24px 24px 26px; display:flex; flex-direction:column; gap:14px; flex:1; }
-.pc-title{ font-size: 18.5px; font-family: var(--font-display); color: var(--white); }
-.project-card.full .pc-title{ color: var(--ink); }
-.pc-block-label{ font-size:13px; color: var(--slate); margin-bottom:3px; }
-.pc-block p{ font-size:14.5px; color: var(--stone); line-height:1.6; }
-.project-card.full .pc-block-label{ color: var(--ink-soft); }
-.project-card.full .pc-block p{ color: var(--navy); }
+.pc-body{ padding: 26px 26px 28px; display:flex; flex-direction:column; gap:16px; flex:1; }
+.pc-title{ font-size: 19px; font-family: var(--font-display); }
+.pc-block-label{ font-family: var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em; color: var(--text-faint); margin-bottom:5px; }
+.pc-block p{ font-size:14px; color: var(--text-muted); line-height:1.55; }
 .pc-tags{ display:flex; flex-wrap:wrap; gap:7px; }
 .pc-result{ display:flex; flex-wrap:wrap; gap:8px; }
-.pc-result .rtag{
-  font-size:12.5px; color: var(--white); background: rgba(203,213,225,0.07);
-  border:1px solid var(--navy-3); padding:4px 11px; border-radius:100px;
-  display:flex; align-items:center; gap:6px;
-}
-.pc-result .rtag svg{ width:11px; height:11px; color: var(--accent-light); }
-.project-card.full .pc-result .rtag{ background: var(--white); border-color: rgba(11,15,20,0.12); color: var(--navy); }
-.project-card.full .pc-result .rtag svg{ color: var(--accent); }
-.project-card.full .tag{ background: var(--white); border-color: rgba(11,15,20,0.12); color: var(--ink-soft); }
-.pc-footer{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; padding-top:4px; }
-.pc-link{ font-size:14px; font-weight:600; color: var(--accent-light); display:flex; align-items:center; gap:6px; }
-.project-card.full .pc-link{ color: var(--accent); }
+.pc-result .rtag{ font-size:12px; color: var(--success); background: var(--success-soft); border:1px solid rgba(98,228,182,0.28); padding:4px 10px; border-radius:100px; display:flex; align-items:center; gap:5px; }
+.pc-result .rtag svg{ width:11px; height:11px; }
+.pc-footer{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:auto; padding-top:6px; }
+.pc-link{ font-size:13.5px; font-weight:600; color: var(--accent); display:flex; align-items:center; gap:6px; }
 .pc-link svg{ width:14px; height:14px; transition: transform 0.25s var(--ease); }
-.project-card:hover .pc-link svg{ transform: translateX(3px); }
-.project-card.full .btn-secondary{ background: var(--navy); border-color: var(--navy); color: var(--white); }
-.project-card.full .btn-secondary:hover{ background: var(--ink); border-color: var(--ink); }
+.project-card:hover .pc-link svg{ transform: translateX(4px); }
 
-/* ============ CONTATO ============ */
-.contact-inner{ text-align:center; max-width: 720px; margin: 0 auto; }
-.contact-inner h2{ font-size: clamp(26px,3.1vw,36px); margin-bottom:12px; color: var(--white); }
-.contact-inner p{ color: var(--stone); max-width:52ch; margin: 0 auto 30px; font-size:16px; }
-.contact-actions{ display:flex; justify-content:center; gap:12px; flex-wrap:wrap; }
+/* ============ CONTACT ============ */
+.contact-box{
+  background: linear-gradient(160deg, var(--surface), var(--bg-elevated));
+  border:1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 64px; text-align:center; position:relative; overflow:hidden;
+}
+.contact-box::before{ content:''; position:absolute; inset:0; background: radial-gradient(600px 300px at 50% 0%, rgba(148,159,255,0.16), transparent 70%); pointer-events:none; }
+.contact-box > *{ position:relative; z-index:1; }
+.contact-box h2{ font-size: clamp(26px,3.2vw,36px); margin-bottom:14px; }
+.contact-box p{ color: var(--text-muted); max-width:480px; margin: 0 auto 34px; font-size:16px; }
+.contact-actions{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
 
-footer{ padding: 26px 0 34px; border-top: 1px solid var(--navy-3); }
+footer{ border-top:1px solid var(--border-soft); padding: 32px 0; }
 .footer-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
-.footer-inner p{ font-size:13.5px; color: var(--slate); }
-footer .icon-btn{ width:34px; height:34px; background: transparent; border-color: var(--navy-3); color: var(--stone); }
-footer .icon-btn:hover{ background: var(--white); border-color: var(--white); color: var(--ink); }
+.footer-inner p{ font-size:13px; color: var(--text-faint); }
+.footer-inner .nav-actions .icon-btn{ width:34px; height:34px; }
 
 /* ============ MODAL ============ */
 .modal-overlay{
-  position:fixed; inset:0; z-index:200; background: rgba(11,15,20,0.62); backdrop-filter: blur(4px);
+  position:fixed; inset:0; z-index:200; background: rgba(15,19,27,0.68); backdrop-filter: blur(6px);
   display:flex; align-items:center; justify-content:center; padding:24px;
-  opacity:0; pointer-events:none; transition: opacity 0.25s var(--ease);
+  opacity:0; pointer-events:none; transition: opacity 0.3s var(--ease);
 }
 .modal-overlay.open{ opacity:1; pointer-events:auto; }
 .modal{
-  position:relative; background: var(--paper); border:1px solid var(--stone); border-radius: var(--radius-lg);
+  position:relative;
+  background: var(--bg-elevated); border:1px solid var(--border); border-radius: var(--radius-lg);
   max-width: 620px; width:100%; max-height:85vh; overflow:visible;
-  transform: translateY(10px); transition: transform 0.3s var(--ease);
-  box-shadow: 0 24px 60px -28px rgba(11,15,20,0.7);
+  transform: translateY(16px) scale(0.98); transition: transform 0.35s var(--ease);
 }
-.modal-overlay.open .modal{ transform: translateY(0); }
-.modal-scroll{ max-height:85vh; overflow-y:auto; padding:36px; border-radius: var(--radius-lg); }
-.modal-close{ position:absolute; top:20px; right:20px; width:34px; height:34px; border-radius:9px; border:1px solid var(--stone); display:flex; align-items:center; justify-content:center; background: var(--paper); color: var(--navy); z-index:6; }
-.modal-close:hover{ background: var(--navy); border-color: var(--navy); color: var(--white); }
-.modal h3{ font-size:23px; margin-bottom:22px; padding-right:40px; color: var(--ink); }
-.modal .pc-block{ margin-bottom:18px; }
-.modal .pc-block-label{ color: var(--slate); }
-.modal .pc-block p{ color: var(--navy); }
-.modal .pc-result .rtag{ background: var(--white); border-color: var(--stone); color: var(--navy); }
-.modal .pc-result .rtag svg{ color: var(--accent); }
-.modal .pc-link{ color: var(--accent); }
+.modal-overlay.open .modal{ transform: translateY(0) scale(1); }
+.modal-scroll{ max-height:85vh; overflow-y:auto; padding:40px; border-radius: var(--radius-lg); }
+.modal-close{ position:absolute; top:24px; right:24px; width:34px; height:34px; border-radius:9px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; background: var(--bg-elevated); z-index:6; }
+.modal-close:hover{ border-color: var(--border-hover); }
+.modal h3{ font-size:24px; margin-bottom:24px; padding-right:40px; }
+.modal .pc-block{ margin-bottom:20px; }
+.modal .pc-tags, .modal .pc-result{ margin-bottom:4px; }
 .modal-panel{ display:none; }
 .modal-panel.active{ display:block; }
 
 .modal-nav{
   position:absolute; top:50%; transform:translateY(-50%);
-  width:44px; height:44px; border-radius:50%;
-  background: var(--paper); border:1px solid var(--stone);
+  width:46px; height:46px; border-radius:50%;
+  background: var(--bg-elevated); border:1px solid var(--border);
   display:flex; align-items:center; justify-content:center;
-  color: var(--navy); cursor:pointer; z-index:10;
-  transition: color 0.2s var(--ease), border-color 0.2s var(--ease), background 0.2s var(--ease);
+  color: var(--text); cursor:pointer; z-index:10;
+  transition: all 0.2s var(--ease);
+  box-shadow: 0 12px 28px -10px rgba(0,0,0,0.6);
 }
-.modal-nav:hover{ background: var(--navy); border-color: var(--navy); color: var(--white); }
+.modal-nav:hover{ border-color: var(--accent); color: var(--accent); transform: translateY(-50%) scale(1.08); }
 .modal-nav svg{ width:18px; height:18px; }
-.modal-nav.right{ right:-62px; }
-.modal-nav.left{ left:-62px; }
+.modal-nav.right{ right:-64px; }
+.modal-nav.left{ left:-64px; }
 @media (max-width: 900px){
   .modal-nav{ top:auto; bottom:16px; transform:none; }
   .modal-nav.right{ right:16px; }
   .modal-nav.left{ left:16px; }
+  .modal-nav:hover{ transform:scale(1.08); }
 }
 
-.demo-hint{ font-size:13px; color: var(--slate); display:flex; align-items:center; gap:6px; margin-top:6px; }
+.demo-hint{ font-size:12.5px; color: var(--text-faint); display:flex; align-items:center; gap:6px; margin-top:8px; }
 .demo-hint svg{ width:13px; height:13px; }
 
 .gif-placeholder{
   aspect-ratio: 16/9; border-radius: var(--radius-md);
-  border: 1.5px dashed var(--stone); background: var(--white);
+  border: 1.5px dashed var(--border-hover);
+  background: repeating-linear-gradient(135deg, rgba(255,255,255,0.03) 0 10px, rgba(255,255,255,0.06) 10px 20px);
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px;
-  margin-bottom: 22px; padding: 20px; text-align:center;
+  margin-bottom: 26px; padding: 20px; text-align:center;
 }
-.gif-placeholder svg{ width:30px; height:30px; color: var(--slate); }
-.gif-placeholder .gif-label{ font-family: var(--font-mono); font-size:12.5px; color: var(--accent); }
-.gif-placeholder .gif-hint{ font-size:12.5px; color: var(--slate); max-width:340px; }
+.gif-placeholder svg{ width:32px; height:32px; color: var(--text-faint); }
+.gif-placeholder .gif-label{ font-family: var(--font-mono); font-size:12.5px; color: var(--accent-2); }
+.gif-placeholder .gif-hint{ font-size:12px; color: var(--text-faint); max-width:320px; }
 
-/* ============ RESPONSIVO ============ */
+/* ============ RESPONSIVE ============ */
 @media (max-width: 980px){
   .hero-grid, .about-grid{ grid-template-columns: 1fr; }
-  .hero-visual{ max-width:460px; }
+  .hero-visual{ order:-1; max-width:420px; }
   .skills-grid{ grid-template-columns: 1fr 1fr; }
   .projects-grid{ grid-template-columns: 1fr; }
 }
@@ -342,13 +360,10 @@ footer .icon-btn:hover{ background: var(--white); border-color: var(--white); co
   nav.main-links{ display:none; }
   .hamburger{ display:flex; }
   .mobile-menu{ display:flex; }
-  section{ padding: 74px 0; }
-  .hero{ padding-top:124px; padding-bottom: 70px; }
+  section{ padding: 88px 0; }
+  .hero{ padding-top:150px; }
   .skills-grid{ grid-template-columns: 1fr; }
-  .flow-tags{ display:none; }
-  .timeline{ padding-left: 26px; }
-  .tl-dot{ left:-26px; }
-  .tl-card{ padding: 20px; }
+  .contact-box{ padding: 40px 24px; }
   .nav-actions .icon-btn:not(.hamburger){ display:none; }
 }
 </style>
@@ -399,12 +414,12 @@ footer .icon-btn:hover{ background: var(--white); border-color: var(--white); co
 <main>
 
   <!-- ============ HERO ============ -->
-  <section id="home" class="hero on-light">
+  <section id="home" class="hero">
     <div class="container hero-grid">
       <div>
-        <p class="kicker">Analista Financeiro · Automação · Business Intelligence</p>
+        <p class="eyebrow">ANALISTA FINANCEIRO · AUTOMAÇÃO · BUSINESS INTELLIGENCE</p>
         <h1>Transformo rotinas financeiras manuais em sistemas que <span class="hl">rodam sozinhos.</span></h1>
-        <p class="hero-sub">Do ERP ao dashboard, construo as automações que tiram o financeiro do modo manual e colocam os dados para trabalhar por você.</p>
+        <p class="hero-sub">Do ERP ao dashboard — construo as automações que tiram o financeiro do modo manual e colocam os dados para trabalhar por você.</p>
         <div class="hero-ctas">
           <a href="#projetos" class="btn btn-primary">Ver projetos de automação</a>
           <a href="curriculo.pdf" target="_blank" rel="noopener" class="btn btn-secondary">
@@ -414,34 +429,40 @@ footer .icon-btn:hover{ background: var(--white); border-color: var(--white); co
         </div>
       </div>
 
-      <div class="hero-visual">
+      <div class="hero-visual reveal">
         <div class="flow-card">
           <span class="flow-tags ft1">Python</span>
           <span class="flow-tags ft2">Power BI</span>
           <span class="flow-tags ft3">Apps Script</span>
-          <svg viewBox="0 0 360 260" role="img" aria-label="Fluxo: ERP, script de automação e planilha">
-            <line x1="70" y1="60" x2="70" y2="200" stroke="#2C3A49" stroke-width="1.5"/>
-            <path d="M70,60 C70,130 180,90 180,160" stroke="#8A97FF" stroke-width="2" fill="none" stroke-dasharray="6 6" class="flow-path"/>
-            <path d="M180,160 C180,90 290,130 290,200" stroke="#0F172A" stroke-width="2" fill="none" stroke-dasharray="6 6" class="flow-path" style="animation-delay:-1s"/>
+          <svg viewBox="0 0 360 260" style="position:relative;z-index:1;">
+            <defs>
+              <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#949FFF"/>
+                <stop offset="100%" stop-color="#F8D083"/>
+              </linearGradient>
+            </defs>
+            <line x1="70" y1="60" x2="70" y2="200" stroke="#424C60" stroke-width="1.5"/>
+            <path d="M70,60 C70,130 180,90 180,160" stroke="url(#lineGrad)" stroke-width="2" fill="none" stroke-dasharray="6 6" class="flow-path"/>
+            <path d="M180,160 C180,90 290,130 290,200" stroke="url(#lineGrad)" stroke-width="2" fill="none" stroke-dasharray="6 6" class="flow-path" style="animation-delay:-1s"/>
 
             <g>
-              <rect x="30" y="34" width="80" height="52" rx="10" fill="#24303E" stroke="#3A4757"/>
-              <text x="70" y="55" text-anchor="middle" fill="#F8FAFC" font-family="JetBrains Mono" font-size="12" font-weight="600">ERP</text>
-              <text x="70" y="70" text-anchor="middle" fill="#8A98AB" font-family="JetBrains Mono" font-size="9">notas fiscais</text>
+              <rect x="30" y="34" width="80" height="52" rx="10" fill="#2D3647" stroke="#4A5468"/>
+              <text x="70" y="55" text-anchor="middle" fill="#F2F4F8" font-family="JetBrains Mono" font-size="12" font-weight="600">ERP</text>
+              <text x="70" y="70" text-anchor="middle" fill="#9AA1B2" font-family="JetBrains Mono" font-size="9">notas fiscais</text>
             </g>
             <g>
-              <rect x="140" y="134" width="80" height="52" rx="10" fill="#24303E" stroke="#3A4757"/>
-              <text x="180" y="155" text-anchor="middle" fill="#F8FAFC" font-family="JetBrains Mono" font-size="12" font-weight="600">Script</text>
-              <text x="180" y="170" text-anchor="middle" fill="#8A98AB" font-family="JetBrains Mono" font-size="9">automação</text>
+              <rect x="140" y="134" width="80" height="52" rx="10" fill="#2D3647" stroke="#4A5468"/>
+              <text x="180" y="155" text-anchor="middle" fill="#F2F4F8" font-family="JetBrains Mono" font-size="12" font-weight="600">Script</text>
+              <text x="180" y="170" text-anchor="middle" fill="#9AA1B2" font-family="JetBrains Mono" font-size="9">automação</text>
             </g>
             <g>
-              <rect x="250" y="174" width="80" height="52" rx="10" fill="#24303E" stroke="#3A4757"/>
-              <text x="290" y="195" text-anchor="middle" fill="#F8FAFC" font-family="JetBrains Mono" font-size="12" font-weight="600">Sheets</text>
-              <text x="290" y="210" text-anchor="middle" fill="#8A98AB" font-family="JetBrains Mono" font-size="9">resultado</text>
+              <rect x="250" y="174" width="80" height="52" rx="10" fill="#2D3647" stroke="#4A5468"/>
+              <text x="290" y="195" text-anchor="middle" fill="#F2F4F8" font-family="JetBrains Mono" font-size="12" font-weight="600">Sheets</text>
+              <text x="290" y="210" text-anchor="middle" fill="#9AA1B2" font-family="JetBrains Mono" font-size="9">resultado</text>
             </g>
-            <circle cx="70" cy="60" r="4" fill="#8A97FF"/>
-            <circle cx="180" cy="160" r="4" fill="#8A97FF"/>
-            <circle cx="290" cy="200" r="4" fill="#0F172A"/>
+            <circle cx="70" cy="60" r="4" fill="#949FFF"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle>
+            <circle cx="180" cy="160" r="4" fill="#A7B0FF"><animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/></circle>
+            <circle cx="290" cy="200" r="4" fill="#F8D083"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite" begin="1s"/></circle>
           </svg>
         </div>
       </div>
@@ -449,13 +470,14 @@ footer .icon-btn:hover{ background: var(--white); border-color: var(--white); co
   </section>
 
   <!-- ============ SOBRE ============ -->
-  <section id="sobre" class="on-light">
+  <section id="sobre">
     <div class="container about-grid">
       <div class="reveal">
-        <h2 style="font-size:clamp(26px,3vw,34px); margin-bottom:20px;">Financeiro por formação. Automação por necessidade.</h2>
+        <p class="eyebrow">SOBRE MIM</p>
+        <h2 style="font-size:clamp(26px,3vw,34px); margin-bottom:22px;">Financeiro por formação. Automação por necessidade.</h2>
         <div class="about-body">
-          <p>Comecei na rotina clássica do setor financeiro: conciliação, fechamento, contas a pagar e a receber. Foi ali que percebi que boa parte do meu tempo, e do tempo do meu time, ia embora em tarefas repetitivas que um script resolvia melhor do que uma pessoa.</p>
-          <p>Hoje construo as automações que eliminam esse retrabalho: do ERP ao Google Sheets, do PostgreSQL ao Power BI. Continuo sendo, antes de tudo, um Analista Financeiro. Só que um que também escreve os scripts que o financeiro precisa.</p>
+          <p>Comecei na rotina clássica do setor financeiro — conciliação, fechamento, contas a pagar e a receber. Foi ali que percebi que boa parte do meu tempo, e do tempo do meu time, ia embora em tarefas repetitivas que um script resolvia melhor do que uma pessoa.</p>
+          <p>Hoje, construo as automações que eliminam esse retrabalho: do ERP ao Google Sheets, do PostgreSQL ao Power BI. Continuo sendo, antes de tudo, um Analista Financeiro — só que um que também escreve os scripts que o financeiro precisa.</p>
         </div>
       </div>
       <div class="facts-card reveal">
@@ -480,72 +502,68 @@ footer .icon-btn:hover{ background: var(--white); border-color: var(--white); co
   </section>
 
   <!-- ============ EXPERIÊNCIA ============ -->
-  <section id="experiencia" class="on-light">
+  <section id="experiencia">
     <div class="container">
       <div class="section-head reveal">
+        <p class="eyebrow">TRAJETÓRIA</p>
         <h2>Experiência</h2>
         <p>Uma linha do tempo construída sobre problemas reais resolvidos com automação.</p>
       </div>
       <div class="timeline">
         <div class="tl-item is-current reveal">
           <div class="tl-dot"></div>
-          <div class="tl-card">
-            <div class="tl-period">09/2025 — atual</div>
-            <div class="tl-role">Analista Financeiro</div>
-            <div class="tl-org">Grupo Barigui</div>
-            <ul class="tl-list">
-              <li>Cuido das rotinas financeiras do dia a dia: fluxo de caixa, conciliações bancárias e controle das movimentações financeiras.</li>
-              <li>Automatizei a conferência fiscal de notas entre as filiais do ERP e acabei com a checagem manual campo a campo.</li>
-              <li>Faço a conferência e a auditoria dos caixas das lojas da região Sul (Curitiba), com inspeções, conciliações e validação dos rateios financeiros.</li>
-              <li>Desenvolvi a integração PostgreSQL ↔ Google Sheets para contas a pagar e a receber, preservando as observações já lançadas pelo time.</li>
-              <li>Criei travas e validações automáticas nas telas de lançamento e tesouraria do ERP para reduzir erro de digitação.</li>
-              <li>Estruturei dashboards em Power BI para o acompanhamento financeiro e operacional.</li>
-            </ul>
-          </div>
+          <div class="tl-period">09/2025 — atual</div>
+          <div class="tl-role">Analista Financeiro</div>
+          <div class="tl-org">Grupo Barigui</div>
+          <ul class="tl-list">
+            <li>Cuido das rotinas financeiras do dia a dia: fluxo de caixa, conciliações bancárias e controle das movimentações financeiras.</li>
+            <li>Automatizei a conferência fiscal de notas entre as filiais do ERP e acabei com a checagem manual campo a campo.</li>
+            <li>Faço a conferência e a auditoria dos caixas das lojas da região Sul (Curitiba), com inspeções, conciliações e validação dos rateios financeiros.</li>
+            <li>Desenvolvi a integração PostgreSQL ↔ Google Sheets para contas a pagar e a receber, preservando as observações já lançadas pelo time.</li>
+            <li>Criei travas e validações automáticas nas telas de lançamento e tesouraria do ERP para reduzir erro de digitação.</li>
+            <li>Estruturei dashboards em Power BI para o acompanhamento financeiro e operacional.</li>
+          </ul>
         </div>
         <div class="tl-item reveal">
           <div class="tl-dot"></div>
-          <div class="tl-card">
-            <div class="tl-period">09/2023 — 07/2025</div>
-            <div class="tl-role">Analista Financeiro</div>
-            <div class="tl-org">EM Industrial Ltda.</div>
-            <ul class="tl-list">
-              <li>Estruturei o departamento financeiro da empresa.</li>
-              <li>Conduzi a gestão financeira: fluxo de caixa, conciliação bancária, contas a pagar e a receber, DDA, agendamento de pagamentos, controle de faturamento e apoio ao RH.</li>
-              <li>Desenvolvi painéis em Power BI para o acompanhamento do fluxo de caixa.</li>
-              <li>Construí a DRE integrando a API do ERP Omie ao Excel.</li>
-              <li>Controlei o faturamento e acompanhei a inadimplência.</li>
-            </ul>
-          </div>
+          <div class="tl-period">09/2023 — 07/2025</div>
+          <div class="tl-role">Analista Financeiro</div>
+          <div class="tl-org">EM Industrial Ltda.</div>
+          <ul class="tl-list">
+            <li>Estruturei o departamento financeiro da empresa.</li>
+            <li>Conduzi a gestão financeira: fluxo de caixa, conciliação bancária, contas a pagar e a receber, DDA, agendamento de pagamentos, controle de faturamento e apoio ao RH.</li>
+            <li>Desenvolvi painéis em Power BI para o acompanhamento do fluxo de caixa.</li>
+            <li>Construí a DRE integrando a API do ERP Omie ao Excel.</li>
+            <li>Controlei o faturamento e acompanhei a inadimplência.</li>
+          </ul>
         </div>
         <div class="tl-item reveal">
           <div class="tl-dot"></div>
-          <div class="tl-card">
-            <div class="tl-period">2026</div>
-            <div class="tl-role">Gestão Financeira</div>
-            <div class="tl-org">UniDomBosco</div>
-          </div>
+          <div class="tl-period">2026</div>
+          <div class="tl-role">Gestão Financeira</div>
+          <div class="tl-org">UniDomBosco</div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ============ COMPETÊNCIAS ============ -->
-  <section id="competencias" class="on-dark">
+  <section id="competencias">
     <div class="container">
       <div class="section-head reveal">
+        <p class="eyebrow">STACK & COMPETÊNCIAS</p>
         <h2>O que eu uso para resolver</h2>
-        <p>Ferramentas de automação, análise e financeiro, combinadas para eliminar retrabalho.</p>
+        <p>Ferramentas de automação, análise e financeiro — combinadas para eliminar retrabalho.</p>
       </div>
       <div class="skills-grid">
         <div class="skill-group reveal">
-          <h3><span class="dot"></span>Automação e integração</h3>
+          <h3><span class="dot"></span>Automação & Integração</h3>
           <div class="pill-row">
             <span class="tag">JavaScript</span><span class="tag">Tampermonkey</span><span class="tag">Google Apps Script</span><span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">PostgreSQL</span><span class="tag">Google Sheets API</span>
           </div>
         </div>
         <div class="skill-group reveal">
-          <h3><span class="dot"></span>Análise e BI</h3>
+          <h3><span class="dot"></span>Análise & BI</h3>
           <div class="pill-row">
             <span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">SQL</span><span class="tag">Excel Avançado</span><span class="tag">Looker Studio</span>
           </div>
@@ -561,22 +579,24 @@ footer .icon-btn:hover{ background: var(--white); border-color: var(--white); co
   </section>
 
   <!-- ============ PROJETOS ============ -->
-  <section id="projetos" class="on-dark">
+  <section id="projetos">
     <div class="container">
       <div class="section-head reveal">
+        <p class="eyebrow">PROJETOS DE AUTOMAÇÃO</p>
         <h2>Estudos de caso, não linhas de código</h2>
-        <p>Cada card abaixo resolve um problema real do financeiro: em vez do código, o resultado para o negócio.</p>
+        <p>Cada card abaixo resolve um problema real do financeiro. Sem mostrar código — mostrando o resultado de negócio.</p>
       </div>
       <div class="projects-grid" id="projectsGrid"><!-- preenchido via JS --></div>
     </div>
   </section>
 
   <!-- ============ CONTATO ============ -->
-  <section id="contato" class="on-dark">
+  <section id="contato">
     <div class="container">
-      <div class="contact-inner reveal">
+      <div class="contact-box reveal">
+        <p class="eyebrow" style="justify-content:center;">VAMOS CONVERSAR</p>
         <h2>Seu financeiro ainda perde tempo com rotina manual?</h2>
-        <p>Se a sua empresa tem processos repetitivos no financeiro, existe uma boa chance de eu já ter resolvido um problema parecido.</p>
+        <p>Se sua empresa tem processos repetitivos no financeiro, existe uma boa chance de eu já ter resolvido um problema parecido.</p>
         <div class="contact-actions">
           <a href="mailto:seuemail@exemplo.com" class="btn btn-primary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v12H4z"/><path d="m4 7 8 6 8-6"/></svg>
@@ -592,7 +612,7 @@ footer .icon-btn:hover{ background: var(--white); border-color: var(--white); co
 
 </main>
 
-<footer class="on-dark">
+<footer>
   <div class="container footer-inner">
     <p>© 2026 Wagner Carvalho — construído com foco em automação e resultado.</p>
     <div class="nav-actions">
@@ -630,8 +650,8 @@ const projetos = [
     title: 'Conferência Inteligente de Notas Fiscais',
     flow: ['ERP', 'Automação', 'Planilha'],
     gifPath: 'gifs/nf-conferencia.gif',
-    problem: 'Cada filial exigia conferência manual de notas fiscais dentro do ERP: localizar a nota, abrir campos fiscais um a um e cruzar informações à mão. Um processo lento, repetido todos os dias e sujeito a erro humano.',
-    solution: 'Automação que navega sozinha entre as filiais do ERP, localiza as notas fiscais, extrai CST, ICMS ST, Natureza da Operação e Placa/Chassi, consulta dados complementares quando necessário e consolida tudo em uma planilha do Google Sheets. A conferência humana passa a olhar só a exceção.',
+    problem: 'Cada filial exigia conferência manual de notas fiscais dentro do ERP: localizar a nota, abrir campos fiscais um a um e cruzar informações à mão — um processo lento, repetido todos os dias e sujeito a erro humano.',
+    solution: 'Automação capaz de navegar automaticamente entre as filiais do ERP, localizar as notas fiscais, extrair CST, ICMS ST, Natureza da Operação e Placa/Chassi, consultar dados complementares quando necessário e consolidar tudo em uma planilha Google Sheets — pronta para a conferência humana focar só na exceção.',
     tech: ['JavaScript', 'Tampermonkey', 'Google Apps Script', 'Google Sheets', 'ERP'],
     result: ['Redução do trabalho manual', 'Padronização da conferência fiscal', 'Maior confiabilidade dos dados', 'Processamento em lote']
   },
@@ -640,8 +660,8 @@ const projetos = [
     title: 'Extração Inteligente de XML',
     flow: ['XML', 'Parser', 'Dashboard'],
     gifPath: 'gifs/xml-extracao.gif',
-    problem: 'Ler o XML de cada nota fiscal manualmente para extrair impostos, CST, CFOP e indicadores fiscais consumia um tempo que poderia ir para análise, não para digitação.',
-    solution: 'Parser automático que lê o XML da nota fiscal, extrai as informações fiscais relevantes (impostos, CST, CFOP, indicadores) e estrutura os dados para análise imediata, sem digitação manual.',
+    problem: 'Ler o XML de cada nota fiscal manualmente para extrair impostos, CST, CFOP e indicadores fiscais consumia um tempo que poderia ir para análise, não digitação.',
+    solution: 'Parser automático que lê o XML da nota fiscal, extrai as informações fiscais relevantes — impostos, CST, CFOP, indicadores — e estrutura os dados para análise imediata, sem digitação manual.',
     tech: ['JavaScript', 'XML Parser', 'Google Apps Script'],
     result: ['Eliminação da digitação manual', 'Maior velocidade de processamento', 'Padronização dos dados extraídos']
   },
@@ -651,7 +671,7 @@ const projetos = [
     flow: ['Banco de Dados', 'Python', 'Sheets'],
     gifPath: 'gifs/postgres-sheets.gif',
     problem: 'As planilhas usadas pelo time viviam desatualizadas em relação ao banco de dados, e cada atualização manual arriscava apagar observações já registradas pelos usuários.',
-    solution: 'Aplicação em Python que consulta o banco PostgreSQL, trata os dados, preserva as observações existentes e sincroniza automaticamente as planilhas usadas pelo time, sem perda de histórico.',
+    solution: 'Aplicação em Python que consulta o banco PostgreSQL, trata os dados, preserva as observações existentes e sincroniza automaticamente as planilhas usadas pelo time — sem perda de histórico.',
     tech: ['Python', 'Pandas', 'PostgreSQL', 'Google Sheets API'],
     result: ['Integração automática', 'Zero perda de observações', 'Atualização em poucos minutos']
   },
@@ -661,7 +681,7 @@ const projetos = [
     flow: ['Dados', 'Power BI', 'Decisão'],
     gifPath: 'gifs/dashboards-financeiros.gif',
     problem: 'Decisões financeiras dependiam de relatórios estáticos, sem visão consolidada de indicadores operacionais em tempo real.',
-    solution: 'Dashboards gerenciais em Power BI para acompanhamento financeiro, indicadores operacionais e apoio direto à tomada de decisão.',
+    solution: 'Desenvolvimento de dashboards gerenciais em Power BI para acompanhamento financeiro, indicadores operacionais e apoio direto à tomada de decisão.',
     tech: ['Power BI', 'DAX', 'SQL'],
     result: ['Visão consolidada de indicadores', 'Decisões mais rápidas', 'Menos relatórios manuais'],
     powerbi: true
@@ -671,8 +691,8 @@ const projetos = [
     title: 'Automações Financeiras',
     flow: ['Tarefa Manual', 'Robô', 'Relatório'],
     gifPath: 'gifs/automacoes-financeiras.gif',
-    problem: 'Validações, preenchimento de campos e integrações repetitivas entre sistemas ocupavam horas do time financeiro todos os meses.',
-    solution: 'Conjunto de automações para reduzir as atividades repetitivas do setor financeiro: validações automáticas, preenchimento de campos, integrações entre sistemas e geração de relatórios.',
+    problem: 'Validações, preenchimentos de campos e integrações repetitivas entre sistemas ocupavam horas do time financeiro todos os meses.',
+    solution: 'Conjunto de automações desenvolvidas para reduzir atividades repetitivas do setor financeiro: validações automáticas, preenchimento de campos, integrações entre sistemas e geração de relatórios.',
     tech: ['JavaScript', 'Google Apps Script', 'Automação de Processos'],
     result: ['Menos horas em tarefas repetitivas', 'Menos erro humano', 'Relatórios gerados automaticamente']
   }
@@ -681,23 +701,18 @@ const projetos = [
 const checkIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m5 13 4 4L19 7"/></svg>';
 const arrowIcon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>';
 
-function flowSVG(labels, light){
-  const box    = light ? '#FFFFFF' : '#24303E';
-  const stroke = light ? '#0F172A' : '#3A4757';
-  const label  = light ? '#24303E' : '#F8FAFC';
-  const base   = light ? '#0F172A' : '#2C3A49';
-  const l1     = light ? '#3F4FDB' : '#8A97FF';
-  const l2     = light ? '#64748B' : '#0F172A';
-  return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${labels.join(', ')}">
-    <line x1="45" y1="65" x2="255" y2="65" stroke="${base}" stroke-width="1.5"/>
-    <path d="M45,65 L150,65" stroke="${l1}" stroke-width="2" stroke-dasharray="5 6" class="flow-path"/>
-    <path d="M150,65 L255,65" stroke="${l2}" stroke-width="2" stroke-dasharray="5 6" class="flow-path" style="animation-delay:-1.2s"/>
-    <g><rect x="10" y="42" width="70" height="46" rx="9" fill="${box}" stroke="${stroke}"/>
-      <text x="45" y="70" text-anchor="middle" fill="${label}" font-family="JetBrains Mono" font-size="9.5" font-weight="600">${labels[0]}</text></g>
-    <g><rect x="115" y="42" width="70" height="46" rx="9" fill="${box}" stroke="${stroke}"/>
-      <text x="150" y="70" text-anchor="middle" fill="${label}" font-family="JetBrains Mono" font-size="9.5" font-weight="600">${labels[1]}</text></g>
-    <g><rect x="220" y="42" width="70" height="46" rx="9" fill="${box}" stroke="${stroke}"/>
-      <text x="255" y="70" text-anchor="middle" fill="${label}" font-family="JetBrains Mono" font-size="9.5" font-weight="600">${labels[2]}</text></g>
+function flowSVG(labels){
+  return `<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid meet">
+    <line x1="45" y1="65" x2="150" y2="65" stroke="#4A5468" stroke-width="1.5"/>
+    <line x1="150" y1="65" x2="255" y2="65" stroke="#4A5468" stroke-width="1.5"/>
+    <path d="M45,65 L150,65" stroke="#949FFF" stroke-width="2" stroke-dasharray="5 6" class="flow-path"/>
+    <path d="M150,65 L255,65" stroke="#F8D083" stroke-width="2" stroke-dasharray="5 6" class="flow-path" style="animation-delay:-1.2s"/>
+    <g><rect x="10" y="42" width="70" height="46" rx="9" fill="#2D3647" stroke="#4A5468"/>
+      <text x="45" y="70" text-anchor="middle" fill="#F2F4F8" font-family="JetBrains Mono" font-size="10.5" font-weight="600">${labels[0]}</text></g>
+    <g><rect x="115" y="42" width="70" height="46" rx="9" fill="#2D3647" stroke="#4A5468"/>
+      <text x="150" y="70" text-anchor="middle" fill="#F2F4F8" font-family="JetBrains Mono" font-size="10.5" font-weight="600">${labels[1]}</text></g>
+    <g><rect x="220" y="42" width="70" height="46" rx="9" fill="#2D3647" stroke="#4A5468"/>
+      <text x="255" y="70" text-anchor="middle" fill="#F2F4F8" font-family="JetBrains Mono" font-size="10.5" font-weight="600">${labels[2]}</text></g>
   </svg>`;
 }
 
@@ -705,9 +720,9 @@ const grid = document.getElementById('projectsGrid');
 projetos.forEach((p, i) => {
   const card = document.createElement('article');
   card.className = 'project-card reveal' + (p.powerbi ? ' full' : '');
-  card.style.transitionDelay = (i * 0.05) + 's';
+  card.style.transitionDelay = (i * 0.06) + 's';
   card.innerHTML = `
-    <div class="pc-visual">${flowSVG(p.flow, !!p.powerbi)}</div>
+    <div class="pc-visual">${flowSVG(p.flow)}</div>
     <div class="pc-body">
       <h3 class="pc-title">${p.title}</h3>
       <div class="pc-block">
@@ -725,10 +740,7 @@ projetos.forEach((p, i) => {
   grid.appendChild(card);
 });
 
-/* as tags dos cards escuros herdam o estilo claro por padrão: ajusta aqui */
-document.querySelectorAll('.project-card:not(.full)').forEach(c => c.classList.add('on-dark'));
-
-/* ============ MODAL ============ */
+/* ============ MODAL LOGIC ============ */
 const overlay = document.getElementById('modalOverlay');
 const modalContent = document.getElementById('modalContent');
 const navRight = document.getElementById('modalNavRight');
@@ -814,13 +826,13 @@ document.addEventListener('keydown', e => {
   if(e.key === 'ArrowLeft' && navLeft.style.display !== 'none') goToDetails();
 });
 
-/* ============ MENU MOBILE ============ */
+/* ============ MOBILE MENU ============ */
 const hamburgerBtn = document.getElementById('hamburgerBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
 mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.remove('open')));
 
-/* ============ REVEAL NO SCROLL ============ */
+/* ============ SCROLL REVEAL ============ */
 const revealEls = document.querySelectorAll('.reveal');
 const io = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -829,7 +841,7 @@ const io = new IntersectionObserver((entries) => {
       io.unobserve(entry.target);
     }
   });
-}, { threshold: 0.12 });
+}, { threshold: 0.15 });
 revealEls.forEach(el => io.observe(el));
 </script>
 
